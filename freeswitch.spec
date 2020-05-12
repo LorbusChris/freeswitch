@@ -55,7 +55,6 @@ BuildRequires: portaudio-devel
 BuildRequires: python
 BuildRequires: python-devel
 BuildRequires: redhat-rpm-config
-BuildRequires: redhat-rpm-macros
 BuildRequires: redis-devel
 BuildRequires: sofia-sip-devel
 BuildRequires: soundtouch-devel >= 1.7.1

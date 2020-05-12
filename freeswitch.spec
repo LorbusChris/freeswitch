@@ -1582,9 +1582,6 @@ fi
 %files endpoint-loopback
 %{_libdir}/%{name}/mod/mod_portaudio.so*
 
-%files endpoint-loopback
-%{_libdir}/%{name}/mod/mod_portaudio.so*
-
 %files endpoint-rtc
 %{_libdir}/%{name}/mod/mod_rtc.so*
 

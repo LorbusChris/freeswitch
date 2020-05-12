@@ -1705,11 +1705,6 @@ fi
 %{_libdir}/%{name}/mod/mod_say_hu.so*
 
 %files lang-it
-%dir %attr(0750, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/it/
-%dir %attr(0750, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/it/demo
-%dir %attr(0750, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/it/vm
-%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/it/*.xml
-%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/it/*/*.xml
 %{_libdir}/%{name}/mod/mod_say_it.so*
 
 %files lang-ja

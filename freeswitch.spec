@@ -1,9 +1,9 @@
 Name:		freeswitch
 Summary:	FreeSWITCH open source telephony platform
 License:	MPL1.1
-Version:	1.10.2
+Version:	1.10.3
 Release:	1%{?dist}
-URL:		http://www.freeswitch.org/
+URL:		https://www.freeswitch.org/
 Source0:	https://github.com/signalwire/freeswitch/archive/v%{version}.tar.gz
 Source1:	modules.conf.fedora
 Source2:	freeswitch.sysusers
@@ -63,6 +63,7 @@ BuildRequires: spandsp-devel
 BuildRequires: speex-devel
 BuildRequires: speexdsp-devel
 BuildRequires: sqlite-devel
+BuildRequires: systemd-rpm-macros
 BuildRequires: unixODBC-devel
 BuildRequires: which
 BuildRequires: yasm
@@ -87,7 +88,7 @@ Requires: libtiff
 Requires: libtheora
 Requires: libxml2
 Requires: libsndfile
-%systemd_requires
+%{?systemd_requires}
 %{?sysusers_requires_compat}
 
 %description

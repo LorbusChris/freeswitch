@@ -1143,6 +1143,7 @@ export CFLAGS="%{optflags} -Wno-error=stringop-truncation"
 autoreconf --force --install
 
 %configure -C \
+--disable-core-libedit-support \
 --disable-static \
 --enable-core-odbc-support \
 --enable-core-pgsql-support \

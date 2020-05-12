@@ -1671,6 +1671,7 @@ fi
 %files lang-es
 %dir %attr(0750, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/es
 %dir %attr(0750, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/es/demo
+%dir %attr(0750, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/es/dir
 %dir %attr(0750, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/es/vm
 %config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/es/*.xml
 %config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/es/*/*.xml
@@ -1685,6 +1686,7 @@ fi
 %files lang-fr
 %dir %attr(0750, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/fr
 %dir %attr(0750, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/fr/demo
+%dir %attr(0750, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/fr/dir
 %dir %attr(0750, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/fr/vm
 %config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/fr/*.xml
 %config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/fr/*/*.xml
@@ -1693,6 +1695,7 @@ fi
 %files lang-he
 %dir %attr(0750, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/he/
 %dir %attr(0750, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/he/demo
+%dir %attr(0750, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/he/dir
 %dir %attr(0750, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/he/vm
 %config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/he/*.xml
 %config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/he/*/*.xml
@@ -1708,32 +1711,18 @@ fi
 %{_libdir}/%{name}/mod/mod_say_it.so*
 
 %files lang-ja
-%dir %attr(0750, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/ja/
-%dir %attr(0750, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/ja/demo
-%dir %attr(0750, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/ja/vm
-%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/ja/*.xml
-%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/ja/*/*.xml
 %{_libdir}/%{name}/mod/mod_say_ja.so*
 
 %files lang-nl
-%dir %attr(0750, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/nl/
-%dir %attr(0750, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/nl/demo
-%dir %attr(0750, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/nl/vm
-%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/nl/*.xml
-%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/nl/*/*.xml
 %{_libdir}/%{name}/mod/mod_say_nl.so*
 
 %files lang-pl
-%dir %attr(0750, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/pl/
-%dir %attr(0750, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/pl/demo
-%dir %attr(0750, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/pl/vm
-%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/pl/*.xml
-%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/pl/*/*.xml
 %{_libdir}/%{name}/mod/mod_say_pl.so*
 
 %files lang-pt
 %dir %attr(0750, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/pt
 %dir %attr(0750, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/pt/demo
+%dir %attr(0750, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/pt/dir
 %dir %attr(0750, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/pt/vm
 %config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/pt/*.xml
 %config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/pt/*/*.xml
@@ -1749,26 +1738,15 @@ fi
 
 %files lang-sv
 %dir %attr(0750, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/sv
-%dir %attr(0750, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/sv/demo
 %dir %attr(0750, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/sv/vm
 %config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/sv/*.xml
 %config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/sv/vm/*.xml
 %{_libdir}/%{name}/mod/mod_say_sv.so*
 
 %files lang-th
-%dir %attr(0750, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/th
-%dir %attr(0750, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/th/demo
-%dir %attr(0750, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/th/vm
-%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/th/*.xml
-%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/th/vm/*.xml
 %{_libdir}/%{name}/mod/mod_say_th.so*
 
 %files lang-zh
-%dir %attr(0750, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/zh
-%dir %attr(0750, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/zh/demo
-%dir %attr(0750, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/zh/vm
-%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/zh/*.xml
-%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/zh/vm/*.xml
 %{_libdir}/%{name}/mod/mod_say_zh.so*
 
 

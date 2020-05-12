@@ -5,7 +5,7 @@ Version:	1.10.2
 Release:	1%{?dist}
 URL:		http://www.freeswitch.org/
 Source0:	https://github.com/signalwire/freeswitch/archive/v%{version}.tar.gz
-#Source1:	 modules.conf.fedora
+Source1:	build/modules.conf.fedora
 
 # TODO(lorbus)
 # Add bundled Provides
@@ -27,7 +27,6 @@ BuildRequires: hiredis-devel
 BuildRequires: ImageMagick-devel
 BuildRequires: ladspa-devel
 BuildRequires: ldns-devel
-BuildRequires: libedit-devel
 BuildRequires: libjpeg-devel
 BuildRequires: libmemcached-devel
 BuildRequires: libogg-devel
@@ -74,7 +73,6 @@ Requires: speex
 Requires: speexdsp
 Requires: sqlite
 Requires: libtiff
-Requires: libedit
 Requires: openssl >= 1.0.1e
 Requires: unixODBC
 Requires: libjpeg
@@ -129,6 +127,16 @@ Requires: %{name} = %{version}-%{release}
 %description application-avmd
 Provide an voicemail beep detector for FreeSWITCH
 
+%package application-bert
+Summary:  FreeSWITCH bert module
+Requires: %{name} = %{version}-%{release}
+
+%description application-bert
+Provides an application that generates and captures a milliwatt tone
+and prints an error rate at the end. It also provides ESL events that
+can be used to load-test equipment and detect if there are audio gaps
+in some of the sessions. It only works with the PCMU codec.
+
 %package application-blacklist
 Summary:  FreeSWITCH blacklist module
 Requires: %{name} = %{version}-%{release}
@@ -150,6 +158,13 @@ Requires: %{name} = %{version}-%{release}
 
 %description application-cidlookup
 Provide FreeSWITCH access to third party CallerID Name Databases via HTTP
+
+%package application-commands
+Summary:  FreeSWITCH mod_commands
+Requires: %{name} = %{version}-%{release}
+
+%description application-commands
+mod_commands processes the FreeSWITCH API commands.
 
 %package application-conference
 Summary:  FreeSWITCH mod_conference
@@ -188,6 +203,15 @@ Requires: %{name} = %{version}-%{release}
 %description application-distributor
 Provides FreeSWITCH mod_distributor, a simple round-robbin style distribution 
 to call gateways.
+
+%package application-dptools
+Summary:  FreeSWITCH mod_dptools
+Requires: %{name} = %{version}-%{release}
+
+%description application-dptools
+FreeSWITCH Dialplan tools to provide the apps (commands)
+to process call sessions in XML dialplans.
+
 
 %package application-easyroute
 Summary:  FreeSWITCH mod_easyroute
@@ -249,7 +273,16 @@ Requires: %{name} = %{version}-%{release}
 
 %description application-hash
 Provides FreeSWITCH mod_hash, implements an API and application interface for 
-manipulating a hash table. It also provides a limit backend. 
+manipulating a hash table. It also provides a limit backend.
+
+%package application-hiredis
+Summary:  FreeSWITCH mod_hiredis
+Requires: %{name} = %{version}-%{release}
+
+%description application-hiredis
+Provides FreeSWITCH mod_hiredis which implements an interface for running
+basic redis commands on configured servers and also deprecated old
+mod_redis implementing the limit backend.
 
 %package application-httapi
 Summary:  FreeSWITCH mod_httapi
@@ -268,6 +301,14 @@ Requires: %{name} = %{version}-%{release}
 Provides FreeSWITCH mod_http_cache, allows one to make a HTTP GET request to 
 cache a document. The primary use case is to download and cache audio files 
 from a web server. 
+
+%package application-ladspa
+Summary:  FreeSWITCH mod_ladspa
+Requires: %{name} = %{version}-%{release}
+
+%description application-ladspa
+Provides FreeSWITCH mod_ladspa, a module that allows to use Linux
+Audio Developer's Simple Plugin API inside freeswitch in realtime.
 
 %package application-lcr
 Summary:  FreeSWITCH mod_lcr
@@ -294,6 +335,21 @@ Requires: %{name} = %{version}-%{release}
 Provides FreeSWITCH mod_nibblebill, provides a credit/debit module for 
 FreeSWITCH to allow real-time debiting of credit or cash from a database 
 while calls are in progress.
+
+%package application-oreka
+Summary:  FreeSWITCH mod_oreka
+Requires: %{name} = %{version}-%{release}
+
+%description application-oreka
+Provides FreeSWITCH mod_oreka, a module for media recording with Oreka
+
+%package application-prefix
+Summary:  FreeSWITCH mod_prefix
+Requires: %{name} = %{version}-%{release}
+
+%description application-prefix
+Provides mod_prefix, longest-prefix match in-memory data store
+for FreeSWITCH
 
 %package application-redis
 Summary:  FreeSWITCH mod_redis
@@ -328,6 +384,14 @@ Requires: %{name} = %{version}-%{release}
 Provides FreeSWITCH mod_snapshot, allows recording a sliding window of audio 
 and taking snapshots to disk. 
 
+%package application-sonar
+Summary:  FreeSWITCH mod_sonar
+Requires: %{name} = %{version}-%{release}
+
+%description application-sonar
+Provides FreeSWITCH mod_sonar which allows to ping a remote server with a tone
+and wait for the echo back to check for possible network problems.
+
 %package application-soundtouch
 Summary:  FreeSWITCH mod_soundtouch
 Requires: %{name} = %{version}-%{release}
@@ -337,6 +401,17 @@ Provides FreeSWITCH mod_soundtouch, uses the soundtouch library, which can do
 pitch shifting and other audio effects, so you can pipe the audio of a call
 (or any other channel audio) through this module and achieve those effects. You
 can specifically adjust pitch, rate, and tempo.
+
+%package application-spandsp
+Summary:  FreeSWITCH mod_spandsp
+Requires: %{name} = %{version}-%{release}
+
+%description application-spandsp
+Provides FreeSWITCH mod_spandsp. The family of modules including mod_fax,
+mod_t38gateway, and the mod_voipcodecs have now been merged into one
+module called mod_spandsp which takes advantage of all the DSP features
+found in the spandsp library including T.38 endpoint and gateway
+functionality.
 
 %package application-spy
 Summary:  FreeSWITCH mod_spy
@@ -376,6 +451,17 @@ Requires: %{name} = %{version}-%{release}
 
 %description application-video_filter
 Provide a chromakey video filter media bug
+
+%package application-vmd
+Summary:  FreeSWITCH mod_vmd
+Requires: %{name} = %{version}-%{release}
+
+%description application-vmd
+VMD stands for "Voice Mail Detection" and mod_vmd is designed to detect the beep
+sound at the end of voicemail or answering machine greetings. This is useful in
+cases where you wish to leave a recorded message on the recipient's message
+system but don't want to have the pregnant pause that is common when using
+wait_for_silence.
 
 %package application-voicemail
 Summary:  FreeSWITCH mod_voicemail
@@ -436,6 +522,13 @@ Requires: %{name} = %{version}-%{release}
 CODEC2 narrow band codec support for FreeSWITCH open source telephony platform.
 CODEC2 was created by the developers of Speex.
 
+%package codec-dahdi
+Summary:  DAHDI codec support for FreeSWITCH open source telephony platform.
+Requires: %{name} = %{version}-%{release}
+
+%description codec-dahdi
+%{summary}.
+
 %package codec-passthru-g723_1
 Summary:   Pass-through g723.1 Codec support for FreeSWITCH open source telephony platform
 Requires:  %{name} = %{version}-%{release}
@@ -456,13 +549,6 @@ Summary:  iSAC Codec support for FreeSWITCH open source telephony platform
 Requires: %{name} = %{version}-%{release}
 
 %description codec-isac
-iSAC Codec support for FreeSWITCH open source telephony platform
-
-%package codec-vpx
-Summary:  vp8 Codec support for FreeSWITCH open source telephony platform
-Requires: %{name} = %{version}-%{release}
-
-%description codec-vpx
 iSAC Codec support for FreeSWITCH open source telephony platform
 
 %package codec-mp4v
@@ -507,15 +593,59 @@ BuildRequires: postgresql-devel
 PostgreSQL native support for FreeSWITCH.
 
 
+# Dialplan Modules
+%package dialplan-directory
+Summary:       FreeSWITCH dialplan directory module
+Requires:      %{name} = %{version}-%{release}
+
+%description dialplan-directory
+%{summary}.
+
+%package dialplan-xml
+Summary:       FreeSWITCH dialplan XML module
+Requires:      %{name} = %{version}-%{release}
+
+%description dialplan-xml
+%{summary}.
+
+
 # Endpoint Modules
+%package endpoint-alsa
+Summary:       Alsa endpoint support for FreeSWITCH open source telephony platform
+Requires:      %{name} = %{version}-%{release}
+
+%description endpoint-alsa
+Alsa endpoint support for FreeSWITCH open source telephony platform.
+
+%package endpoint-dingaling
+Summary:       Dingaling endpoint support for FreeSWITCH open source telephony platform
+Requires:      %{name} = %{version}-%{release}
+
+%description endpoint-dingaling
+mod_dingaling is a generic xmpp registration that can be used for
+Google talk or any other XMPP integration.
+
+%package endpoint-loopback
+Summary:       Loopback endpoint support for FreeSWITCH open source telephony platform
+Requires:      %{name} = %{version}-%{release}
+
+%description endpoint-loopback
+The Loopback special channel emulates an endpoint to route a call back
+into the start of the specified dialplan.
+
 %package endpoint-portaudio
 Summary:       PortAudio endpoint support for FreeSWITCH open source telephony platform
 Requires:      %{name} = %{version}-%{release}
-Requires:      alsa-lib
-BuildRequires: alsa-lib-devel
 
 %description endpoint-portaudio
 PortAudio endpoint support for FreeSWITCH open source telephony platform.
+
+%package endpoint-rtc
+Summary:  RTC Endpoint support for FreeSWITCH open source telephony platform
+Requires: %{name} = %{version}-%{release}
+
+%description endpoint-rtc
+mod_rtc supports media streaming used by WebRTC and mod_verto
 
 %package endpoint-rtmp
 Summary:  RTPM Endpoint support for FreeSWITCH open source telephony platform
@@ -526,6 +656,13 @@ RTMP Endpoint support for FreeSWITCH open source telephony platform. Allows Free
 to be used from a RTMP client. See http://wiki.freeswitch.org/wiki/Mod_rtmp#Flex_Client
 for the OpenSouce FreeSWITCH backed Client.
 
+%package endpoint-sofia
+Summary:  Sofia endpoint support for FreeSWITCH open source telephony platform
+Requires: %{name} = %{version}-%{release}
+
+%description endpoint-sofia
+mod_sofia is the SIP endpoint implemented by FreeSWITCH.
+
 %package endpoint-verto
 Summary:  Verto endpoint support for FreeSWITCH open source telephony platform
 Requires: %{name} = %{version}-%{release}
@@ -533,23 +670,31 @@ Requires: %{name} = %{version}-%{release}
 %description endpoint-verto
 Verto protocol support for FreeSWITCH open source telephony platform.
 
-%package endpoint-rtc
-Summary:  Verto endpoint support for FreeSWITCH open source telephony platform
-Requires: %{name} = %{version}-%{release}
-
-%description endpoint-rtc
-Verto protocol support for FreeSWITCH open source telephony platform.
-
 
 # Event Handler Modules
+%package event-amqp
+Summary:       AMQP support for the FreeSWITCH open source telephony platform
+Requires:      %{name} = %{version}-%{release}
+
+%description event-amqp
+mod_amqp gives FreeSWITCH the ability to send events through an AMQP server
+like RabbitMQ and listen for api commands.
+
+%package event-cdr-csv
+Summary:       Call Details Records Logger using text generation templates for the FreeSWITCH open source telephony platform
+Requires:      %{name} = %{version}-%{release}
+
+%description event-cdr-csv
+Call Details Records Logger using text generation templates for FreeSWITCH.
+
 %package event-cdr-pg-csv
-Summary:       PostgreSQL CDR Logger for the FreeSWITCH open source telephony platform
+Summary:       PostgreSQL Call Details Records Logger for the FreeSWITCH open source telephony platform
 Requires:      %{name} = %{version}-%{release}
 Requires:      postgresql-libs
 BuildRequires: postgresql-devel
 
 %description event-cdr-pg-csv
-PostgreSQL CDR Logger for FreeSWITCH.
+PostgreSQL Call Details Records Logger for FreeSWITCH.
 
 %package event-cdr-sqlite
 Summary:  SQLite CDR Logger for the FreeSWITCH open source telephony platform
@@ -567,28 +712,30 @@ BuildRequires: erlang
 %description event-erlang-event
 Erlang Event Module for FreeSWITCH.
 
+%package event-multicast
+Summary:       Multicast Event System for the FreeSWITCH open source telephony platform
+Requires:      %{name} = %{version}-%{release}
+
+%description event-multicast
+mod_event_multicast sends FreeSWITCH events from the machine via multicast to a
+configurable address/port combination. Other hosts can be configured to listen
+for these events and parse them, potentially also triggering events to happen on
+those hosts.
+
+%package event-socket
+Summary:       Socket Module for the FreeSWITCH open source telephony platform
+Requires:      %{name} = %{version}-%{release}
+
+%description event-socket
+mod_event_socket is a TCP-based interface to control FreeSWITCH, and it operates in two modes,
+inbound and outbound. (These terms are relative to FreeSWITCH).
+
 %package event-format-cdr
 Summary:  JSON and XML Logger for the FreeSWITCH open source telephony platform
 Requires: %{name} = %{version}-%{release}
 
 %description event-format-cdr
 JSON and XML Logger for the FreeSWITCH open source telephony platform
-
-%package kazoo
-Summary:       Kazoo Module for the FreeSWITCH open source telephony platform
-Requires:      %{name} = %{version}-%{release}
-Requires:      erlang
-BuildRequires: erlang
-
-%description kazoo
-Kazoo Module for FreeSWITCH.
-
-%package event-multicast
-Summary:  Multicast Event System for the FreeSWITCH open source telephony platform
-Requires: %{name} = %{version}-%{release}
-
-%description event-multicast
-Multicast Event System for FreeSWITCH.
 
 %package event-json-cdr
 Summary:  JSON CDR Logger for the FreeSWITCH open source telephony platform
@@ -597,24 +744,31 @@ Requires: %{name} = %{version}-%{release}
 %description event-json-cdr
 JSON CDR Logger for FreeSWITCH.
 
-%package event-radius-cdr
-Summary:  RADIUS Logger for the FreeSWITCH open source telephony platform
+%package event-kazoo
+Summary:       Kazoo Module for the FreeSWITCH open source telephony platform
+Requires:      %{name} = %{version}-%{release}
+Requires:      erlang
+BuildRequires: erlang
+
+%description event-kazoo
+Kazoo Module for FreeSWITCH.
+
+%package event-odbc-cdr
+Summary:  ODBC CDR Logger for the FreeSWITCH open source telephony platform
 Requires: %{name} = %{version}-%{release}
 
-%description event-radius-cdr
-RADIUS Logger for the FreeSWITCH open source telephony platform
-
-
-# Logger Modules
-%package logger-graylog2
-Summary:  GELF logger for Graylog2 and Logstash
-Requires: %{name} = %{version}-%{release}
-
-%description logger-graylog2
-GELF logger for Graylog2 and Logstash
+%description event-odbc-cdr
+Insert channel variables directly into database after call ends.
 
 
 # Media Format Modules
+%package format-imagick
+Summary:  ImageMagick support for the FreeSWITCH open source telephony platform
+Requires: %{name} = %{version}-%{release}
+
+%description format-imagick
+%{summary}.
+
 %package format-local-stream
 Summary:  Local File Streamer for the FreeSWITCH open source telephony platform
 Requires: %{name} = %{version}-%{release}
@@ -634,6 +788,13 @@ The native file module is designed to make it easy to play sound files where no
 transcoding is necessary. The default FreeSWITCH sound files are in wav format.
 Generally, these require transcoding when being played to callers. However, if
 a native format sound file is available then FreeSWITCH can use it. 
+
+%package format-png
+Summary:  PNG file support for the FreeSWITCH open source telephony platform
+Requires: %{name} = %{version}-%{release}
+
+%description format-png
+%{summary}.
 
 %package format-portaudio-stream
 Summary:  PortAudio Media Steam support for the FreeSWITCH open source telephony platform
@@ -665,6 +826,13 @@ BuildRequires: lame-devel
 Mod Shout is a FreeSWITCH module to allow you to stream audio from MP3s or a i
 shoutcast stream.
 
+%package format-sndfile
+Summary:  Sndfile support for the FreeSWITCH open source telephony platform
+Requires: %{name} = %{version}-%{release}
+
+%description format-sndfile
+%{summary}.
+
 %package format-tone-stream
 Summary:  Implements TGML Tone Generation for the FreeSWITCH open source telephony platform
 Requires: %{name} = %{version}-%{release}
@@ -689,28 +857,45 @@ Requires: perl
 %description perl
 %{summary}.
 
+%package yaml
+Summary:  YAML support for the FreeSWITCH open source telephony platform
+Requires: %{name} = %{version}-%{release}
+
+%description yaml
+%{summary}.
+
+
+# Logger Modules
+%package logger-console
+Summary:  Console logger for FreeSWITCH
+Requires: %{name} = %{version}-%{release}
+
+%description logger-console
+%{summary}.
+
+%package logger-graylog2
+Summary:  GELF logger for Graylog2 and Logstash
+Requires: %{name} = %{version}-%{release}
+
+%description logger-graylog2
+GELF logger for Graylog2 and Logstash
+
+%package logger-logfile
+Summary:  Logfile logger for FreeSWITCH
+Requires: %{name} = %{version}-%{release}
+
+%description logger-logfile
+%{summary}.
+
+%package logger-syslog
+Summary:  Syslog logger for FreeSWITCH
+Requires: %{name} = %{version}-%{release}
+
+%description logger-syslog
+%{summary}.
+
+
 # Say Modules
-%package lang-en
-Summary:  Provides English language dependand modules and speech config for the FreeSWITCH Open Source telephone platform.
-Requires: %{name} = %{version}-%{release}
-
-%description lang-en
-English language phrases module and directory structure for say module and voicemail
-
-%package lang-ru
-Summary:  Provides Russian language dependand modules and speech config for the FreeSWITCH Open Source telephone platform.
-Requires: %{name} = %{version}-%{release}
-
-%description lang-ru
-Russian language phrases module and directory structure for say module and voicemail
-
-%package lang-fr
-Summary:  Provides French language dependend modules and speech config for the FreeSWITCH Open Source telephone platform.
-Requires: %{name} = %{version}-%{release}
-
-%description lang-fr
-French language phrases module and directory structure for say module and voicemail
-
 %package lang-de
 Summary:  Provides German language dependend modules and speech config for the FreeSWITCH Open Source telephone platform.
 Requires: %{name} = %{version}-%{release}
@@ -718,12 +903,12 @@ Requires: %{name} = %{version}-%{release}
 %description lang-de
 German language phrases module and directory structure for say module and voicemail
 
-%package lang-he
-Summary:  Provides Hebrew language dependend modules and speech config for the FreeSWITCH Open Source telephone platform.
+%package lang-en
+Summary:  Provides English language dependand modules and speech config for the FreeSWITCH Open Source telephone platform.
 Requires: %{name} = %{version}-%{release}
 
-%description lang-he
-Hebrew language phrases module and directory structure for say module and voicemail
+%description lang-en
+English language phrases module and directory structure for say module and voicemail
 
 %package lang-es
 Summary:  Provides Spanish language dependend modules and speech config for the FreeSWITCH Open Source telephone platform.
@@ -732,6 +917,76 @@ Requires: %{name} = %{version}-%{release}
 %description lang-es
 Spanish language phrases module and directory structure for say module and voicemail
 
+%package lang-es-ar
+Summary:  Provides Argentinian Spanish language dependend modules and speech config for the FreeSWITCH Open Source telephone platform.
+Requires: %{name} = %{version}-%{release}
+
+%description lang-es-ar
+Argentinian Spanish language phrases module and directory structure for say module and voicemail
+
+%package lang-fa
+Summary:  Provides Farsi language dependend modules and speech config for the FreeSWITCH Open Source telephone platform.
+Requires: %{name} = %{version}-%{release}
+
+%description lang-fa
+Farsi language phrases module and directory structure for say module and voicemail
+
+%package lang-fr
+Summary:  Provides French language dependend modules and speech config for the FreeSWITCH Open Source telephone platform.
+Requires: %{name} = %{version}-%{release}
+
+%description lang-fr
+French language phrases module and directory structure for say module and voicemail
+
+%package lang-he
+Summary:  Provides Hebrew language dependend modules and speech config for the FreeSWITCH Open Source telephone platform.
+Requires: %{name} = %{version}-%{release}
+
+%description lang-he
+Hebrew language phrases module and directory structure for say module and voicemail
+
+%package lang-hr
+Summary:  Provides Croatian language dependend modules and speech config for the FreeSWITCH Open Source telephone platform.
+Requires: %{name} = %{version}-%{release}
+
+%description lang-hr
+Croatian language phrases module and directory structure for say module and voicemail
+
+%package lang-hu
+Summary:  Provides Hungarian language dependend modules and speech config for the FreeSWITCH Open Source telephone platform.
+Requires: %{name} = %{version}-%{release}
+
+%description lang-hu
+Hungarian language phrases module and directory structure for say module and voicemail
+
+%package lang-it
+Summary:  Provides Italian language dependend modules and speech config for the FreeSWITCH Open Source telephone platform.
+Requires: %{name} = %{version}-%{release}
+
+%description lang-it
+Italian language phrases module and directory structure for say module and voicemail
+
+%package lang-ja
+Summary:  Provides Japanese language dependend modules and speech config for the FreeSWITCH Open Source telephone platform.
+Requires: %{name} = %{version}-%{release}
+
+%description lang-ja
+Japanese language phrases module and directory structure for say module and voicemail
+
+%package lang-nl
+Summary:  Provides Dutch language dependend modules and speech config for the FreeSWITCH Open Source telephone platform.
+Requires: %{name} = %{version}-%{release}
+
+%description lang-nl
+Dutch language phrases module and directory structure for say module and voicemail
+
+%package lang-pl
+Summary:  Provides Polish language dependend modules and speech config for the FreeSWITCH Open Source telephone platform.
+Requires: %{name} = %{version}-%{release}
+
+%description lang-pl
+Polish language phrases module and directory structure for say module and voicemail
+
 %package lang-pt
 Summary:  Provides Portugese language dependend modules and speech config for the FreeSWITCH Open Source telephone platform.
 Requires: %{name} = %{version}-%{release}
@@ -739,12 +994,33 @@ Requires: %{name} = %{version}-%{release}
 %description lang-pt
 Portugese language phrases module and directory structure for say module and voicemail
 
+%package lang-ru
+Summary:  Provides Russian language dependand modules and speech config for the FreeSWITCH Open Source telephone platform.
+Requires: %{name} = %{version}-%{release}
+
+%description lang-ru
+Russian language phrases module and directory structure for say module and voicemail
+
 %package lang-sv
 Summary:  Provides Swedish language dependend modules and speech config for the FreeSWITCH Open Source telephone platform.
 Requires: %{name} = %{version}-%{release}
 
 %description lang-sv
 Swedish language phrases module and directory structure for say module and voicemail
+
+%package lang-th
+Summary:  Provides Thai language dependend modules and speech config for the FreeSWITCH Open Source telephone platform.
+Requires: %{name} = %{version}-%{release}
+
+%description lang-th
+Thai language phrases module and directory structure for say module and voicemail
+
+%package lang-zh
+Summary:  Provides Chinese language dependend modules and speech config for the FreeSWITCH Open Source telephone platform.
+Requires: %{name} = %{version}-%{release}
+
+%description lang-zh
+Chinese language phrases module and directory structure for say module and voicemail
 
 
 # Timer Modules
@@ -786,6 +1062,13 @@ Requires: %{name} = %{version}-%{release}
 
 %description xml-rpc
 Provides XML-RPC interface for the FreeSWITCH Open Source telephone platform.
+
+%package xml-scgi
+Summary:  Provides XML-SCGI interface for the FreeSWITCH Open Source telephone platform.
+Requires: %{name} = %{version}-%{release}
+
+%description xml-scgi
+Provides XML-SCGI interface for the FreeSWITCH Open Source telephone platform.
 
 
 # FreeSWITCH basic config module
@@ -846,45 +1129,45 @@ Basic vanilla config set for the FreeSWITCH Open Source telephone platform.
 
 
 %build
-mv build/modules.conf.fedora ./modules.conf
+# Do not register for ClueCon during build
+touch noreg
+
+cp %{SOURCE1} ./modules.conf
 
 export VERBOSE=yes
-export PKG_CONFIG_PATH=/usr/bin/pkg-config:$PKG_CONFIG_PATH
 export ACLOCAL_FLAGS="-I /usr/share/aclocal"
+
+export CFLAGS="%{optflags} -Wno-error=stringop-truncation"
 
 ./bootstrap.sh
 autoreconf --force --install
 
 %configure -C \
---prefix=%{_prefix} \
---exec-prefix=%{_exec_prefix} \
---bindir=%{_bindir} \
---sbindir=%{_sbindir} \
---libexecdir=%{_libexecdir}/%{name} \
---sharedstatedir=%{_sharedstatedir}/%{name} \
---localstatedir=%{_localstatedir} \
---libdir=%{_libdir} \
---includedir=%{_includedir} \
---datadir=%{_datadir} \
---infodir=%{_infodir} \
---mandir=%{_mandir} \
+--disable-static \
+--enable-core-odbc-support \
+--enable-core-pgsql-support \
+--enable-system-lua \
+--enable-system-xmlrpc-c \
+--enable-threads \
+--enable-timerfd-wrapper \
+--with-cachedir=%{_localstatedir}/lib/%{name}/cache \
+--with-certsdir=%{_sysconfdir}/pki/tls \
+--with-dbdir=%{_localstatedir}/lib/%{name}/db \
+--with-devrandom=/dev/random \
+--with-erlang \
+--with-grammardir=%{_datadir}/%{name}/grammar \
+--with-htdocsdir=%{_datadir}/%{name}/htdocs \
+--with-imagesdir=%{_localstatedir}/lib/%{name}/images \
 --with-logfiledir=/var/log/%{name} \
 --with-modinstdir=%{_libdir}/%{name}/mod \
---with-rundir=%{_rundir}/%{name} \
---with-dbdir=%{_localstatedir}/lib/%{name}/db \
---with-htdocsdir=%{_datarootdir}/%{name}/htdocs \
---with-soundsdir=%{_datarootdir}/%{name}/sounds \
---enable-core-odbc-support \
---enable-core-libedit-support \
---with-grammardir=%{_datarootdir}/%{name}/grammar \
---with-scriptdir=%{_datarootdir}/%{name}/scripts \
---with-recordingsdir=%{_localstatedir}/lib/%{name}/recordings \
---with-pkgconfigdir=%{_datarootdir}/%{name}/pkgconfig \
 --with-odbc \
---with-erlang \
 --with-openssl \
---with-python=%{__python3} \
-%{?configure_options}
+--with-pkgconfigdir=%{_datadir}/%{name}/pkgconfig \
+--with-recordingsdir=%{_localstatedir}/lib/%{name}/recordings \
+--with-rundir=%{_rundir}/%{name} \
+--with-scriptdir=%{_datadir}/%{name}/scripts \
+--with-soundsdir=%{_datadir}/%{name}/sounds \
+--with-storagedir=%{_localstatedir}/lib/%{name}/storage
 
 %{__make}
 
@@ -905,27 +1188,25 @@ autoreconf --force --install
 
 
 %pre
-# TODO(lorbus) use proper macros
+# TODO(lorbus) sysusers format and macro
 if ! /usr/bin/id freeswitch &>/dev/null; then
-	/usr/sbin/useradd -r -g daemon -s /bin/false -c "The FreeSWITCH Open Source Voice Platform" -d %{_localstatedir}/lib/%{name} freeswitch || \
+	/usr/sbin/useradd -r -g freeswitch -s /bin/false -c "The FreeSWITCH Open Source Telephony Platform" -d %{_localstatedir}/lib/%{name} freeswitch || \
 		%logmsg "Unexpected error adding user \"freeswitch\". Aborting installation."
 fi
 
 
 %post
-# TODO(lorbus) use proper macros
-chown freeswitch:daemon /var/log/freeswitch /var/run/freeswitch
 %tmpfiles_create freeswitch
-/usr/bin/systemctl -q enable freeswitch.service
+%systemd_post freeswitch.service
 
 
 %preun
-%{?systemd_preun freeswitch.service}
+%systemd_preun freeswitch.service
 
 
 %postun
-# TODO(lorbus) use proper macros
-%{?systemd_postun freeswitch.service}
+# TODO(lorbus) sysusers format and macro
+%systemd_postun_with_restart freeswitch.service
 if [ $1 -eq 0 ]; then
     userdel freeswitch || %logmsg "User \"freeswitch\" could not be deleted."
 fi
@@ -933,502 +1214,684 @@ fi
 
 %files
 # Basic Directory Structure
-%dir %attr(0750, freeswitch, daemon) %{_sysconfdir}/%{name}
-%dir %attr(0750, freeswitch, daemon) %{_localstatedir}/lib/%{name}
-%dir %attr(0750, freeswitch, daemon) %{_localstatedir}/lib/%{name}/images
-%dir %attr(0750, freeswitch, daemon) %{_localstatedir}/lib/%{name}/db
-%dir %attr(0755, -, -) %{_datarootdir}/%{name}/grammar
-%dir %attr(0755, -, -) %{_datarootdir}/%{name}/htdocs
-%dir %attr(0750, freeswitch, daemon) /var/log/%{name}
-%dir %attr(0750, freeswitch, daemon) %{_rundir}/%{name}
-%dir %attr(0755, -, -) %{_datarootdir}/%{name}/scripts
+%dir %attr(0750, freeswitch, freeswitch) %{_localstatedir}/lib/%{name}
+%dir %attr(0750, freeswitch, freeswitch) %{_localstatedir}/lib/%{name}/cache
+%dir %attr(0750, freeswitch, freeswitch) %{_localstatedir}/lib/%{name}/db
+%dir %attr(0750, freeswitch, freeswitch) %{_localstatedir}/lib/%{name}/images
+%dir %attr(0750, freeswitch, freeswitch) %{_localstatedir}/lib/%{name}/storage
+%dir %attr(0750, freeswitch, freeswitch) %{_localstatedir}/log/%{name}
+%dir %attr(0750, freeswitch, freeswitch) %{_rundir}/%{name}
+%dir %attr(0750, freeswitch, freeswitch) %{_sysconfdir}/%{name}
+%dir %attr(0755, -, -) %{_datadir}/%{name}/grammar
+%dir %attr(0755, -, -) %{_datadir}/%{name}/htdocs
+%dir %attr(0755, -, -) %{_datadir}/%{name}/scripts
+%dir %attr(0755, -, -) %{_datadir}/%{name}/fonts/
 # Config Directory Structure
-%dir %attr(0750, freeswitch, daemon) %{_sysconfdir}/%{name}/autoload_configs
-%dir %attr(0750, freeswitch, daemon) %{_sysconfdir}/%{name}/dialplan
-%dir %attr(0750, freeswitch, daemon) %{_sysconfdir}/%{name}/dialplan/default
-%dir %attr(0750, freeswitch, daemon) %{_sysconfdir}/%{name}/dialplan/public
-%dir %attr(0750, freeswitch, daemon) %{_sysconfdir}/%{name}/dialplan/skinny-patterns/
-%dir %attr(0750, freeswitch, daemon) %{_sysconfdir}/%{name}/directory
-%dir %attr(0750, freeswitch, daemon) %{_sysconfdir}/%{name}/directory/default
-%dir %attr(0750, freeswitch, daemon) %{_sysconfdir}/%{name}/jingle_profiles
-%dir %attr(0750, freeswitch, daemon) %{_sysconfdir}/%{name}/lang
-%dir %attr(0750, freeswitch, daemon) %{_sysconfdir}/%{name}/mrcp_profiles
-%dir %attr(0750, freeswitch, daemon) %{_sysconfdir}/%{name}/sip_profiles
-%dir %attr(0750, freeswitch, daemon) %{_sysconfdir}/%{name}/sip_profiles/external
-%dir %attr(0750, freeswitch, daemon) %{_sysconfdir}/%{name}/sip_profiles/external-ipv6
+%dir %attr(0750, freeswitch, freeswitch) %{_sysconfdir}/%{name}/autoload_configs
+%dir %attr(0750, freeswitch, freeswitch) %{_sysconfdir}/%{name}/dialplan
+%dir %attr(0750, freeswitch, freeswitch) %{_sysconfdir}/%{name}/dialplan/default
+%dir %attr(0750, freeswitch, freeswitch) %{_sysconfdir}/%{name}/dialplan/public
+%dir %attr(0750, freeswitch, freeswitch) %{_sysconfdir}/%{name}/dialplan/skinny-patterns/
+%dir %attr(0750, freeswitch, freeswitch) %{_sysconfdir}/%{name}/directory
+%dir %attr(0750, freeswitch, freeswitch) %{_sysconfdir}/%{name}/directory/default
+%dir %attr(0750, freeswitch, freeswitch) %{_sysconfdir}/%{name}/jingle_profiles
+%dir %attr(0750, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang
+%dir %attr(0750, freeswitch, freeswitch) %{_sysconfdir}/%{name}/mrcp_profiles
+%dir %attr(0750, freeswitch, freeswitch) %{_sysconfdir}/%{name}/sip_profiles
+%dir %attr(0750, freeswitch, freeswitch) %{_sysconfdir}/%{name}/sip_profiles/external
+%dir %attr(0750, freeswitch, freeswitch) %{_sysconfdir}/%{name}/sip_profiles/external-ipv6
 # Other Files
-%config(noreplace) %attr(0644,-,-) %{_datarootdir}/%{name}/htdocs/*
+%config(noreplace) %{_datadir}/%{name}/htdocs/*
 %{_unitdir}/freeswitch.service
 %{_tmpfilesdir}/freeswitch.conf
 %config(noreplace) /etc/sysconfig/freeswitch
-%dir %attr(0750,-,-) /etc/monit.d
-%config(noreplace) %attr(0644,-,-) /etc/monit.d/freeswitch.monitrc
-%{_localstatedir}/lib/%{name}/images/*
-# Binaries
-%attr(0755,-,-) %{_bindir}/*
+%config(noreplace) /etc/monit.d/freeswitch.monitrc
+# CLI
+%attr(0755,-,-) %{_bindir}/fs_cli
 %{_libdir}/libfreeswitch*.so*
-# Modules 
-%attr(0644,-,-) %{_libdir}/%{name}/mod/mod_*
 
 
 %files devel
-%{_libdir}/*.a
-%attr(0644,-,-) %{_libdir}/*.la
-%{_datarootdir}/%{name}/pkgconfig/*
-%attr(0644,-,-) %{_libdir}/%{name}/mod/*.*a
+%{_datadir}/%{name}/pkgconfig/*
 %{_includedir}/*.h
 %{_includedir}/test/*.h
 
 
 %files config-vanilla
-%config(noreplace) %attr(0640, freeswitch, daemon) %{_sysconfdir}/%{name}/*.tpl
-%config(noreplace) %attr(0640, freeswitch, daemon) %{_sysconfdir}/%{name}/*.ttml
-%config(noreplace) %attr(0640, freeswitch, daemon) %{_sysconfdir}/%{name}/*.xml
-%config(noreplace) %attr(0640, freeswitch, daemon) %{_sysconfdir}/%{name}/extensions.conf
-%config(noreplace) %attr(0640, freeswitch, daemon) %{_sysconfdir}/%{name}/mime.types
-%config(noreplace) %attr(0640, freeswitch, daemon) %{_sysconfdir}/%{name}/autoload_configs/abstraction.conf.xml
-%config(noreplace) %attr(0640, freeswitch, daemon) %{_sysconfdir}/%{name}/autoload_configs/acl.conf.xml
-%config(noreplace) %attr(0640, freeswitch, daemon) %{_sysconfdir}/%{name}/autoload_configs/alsa.conf.xml
-%config(noreplace) %attr(0640, freeswitch, daemon) %{_sysconfdir}/%{name}/autoload_configs/amqp.conf.xml
-%config(noreplace) %attr(0640, freeswitch, daemon) %{_sysconfdir}/%{name}/autoload_configs/amr.conf.xml
-%config(noreplace) %attr(0640, freeswitch, daemon) %{_sysconfdir}/%{name}/autoload_configs/amrwb.conf.xml
-%config(noreplace) %attr(0640, freeswitch, daemon) %{_sysconfdir}/%{name}/autoload_configs/av.conf.xml
-%config(noreplace) %attr(0640, freeswitch, daemon) %{_sysconfdir}/%{name}/autoload_configs/avmd.conf.xml
-%config(noreplace) %attr(0640, freeswitch, daemon) %{_sysconfdir}/%{name}/autoload_configs/blacklist.conf.xml
-%config(noreplace) %attr(0640, freeswitch, daemon) %{_sysconfdir}/%{name}/autoload_configs/callcenter.conf.xml
-%config(noreplace) %attr(0640, freeswitch, daemon) %{_sysconfdir}/%{name}/autoload_configs/cdr_csv.conf.xml
-%config(noreplace) %attr(0640, freeswitch, daemon) %{_sysconfdir}/%{name}/autoload_configs/cdr_mongodb.conf.xml
-%config(noreplace) %attr(0640, freeswitch, daemon) %{_sysconfdir}/%{name}/autoload_configs/cdr_pg_csv.conf.xml
-%config(noreplace) %attr(0640, freeswitch, daemon) %{_sysconfdir}/%{name}/autoload_configs/cdr_sqlite.conf.xml
-%config(noreplace) %attr(0640, freeswitch, daemon) %{_sysconfdir}/%{name}/autoload_configs/cepstral.conf.xml
-%config(noreplace) %attr(0640, freeswitch, daemon) %{_sysconfdir}/%{name}/autoload_configs/cidlookup.conf.xml
-%config(noreplace) %attr(0640, freeswitch, daemon) %{_sysconfdir}/%{name}/autoload_configs/conference_layouts.conf.xml
-%config(noreplace) %attr(0640, freeswitch, daemon) %{_sysconfdir}/%{name}/autoload_configs/conference.conf.xml
-%config(noreplace) %attr(0640, freeswitch, daemon) %{_sysconfdir}/%{name}/autoload_configs/console.conf.xml
-%config(noreplace) %attr(0640, freeswitch, daemon) %{_sysconfdir}/%{name}/autoload_configs/curl.conf.xml
-%config(noreplace) %attr(0640, freeswitch, daemon) %{_sysconfdir}/%{name}/autoload_configs/db.conf.xml
-%config(noreplace) %attr(0640, freeswitch, daemon) %{_sysconfdir}/%{name}/autoload_configs/dialplan_directory.conf.xml
-%config(noreplace) %attr(0640, freeswitch, daemon) %{_sysconfdir}/%{name}/autoload_configs/dingaling.conf.xml
-%config(noreplace) %attr(0640, freeswitch, daemon) %{_sysconfdir}/%{name}/autoload_configs/directory.conf.xml
-%config(noreplace) %attr(0640, freeswitch, daemon) %{_sysconfdir}/%{name}/autoload_configs/distributor.conf.xml
-%config(noreplace) %attr(0640, freeswitch, daemon) %{_sysconfdir}/%{name}/autoload_configs/easyroute.conf.xml
-%config(noreplace) %attr(0640, freeswitch, daemon) %{_sysconfdir}/%{name}/autoload_configs/enum.conf.xml
-%config(noreplace) %attr(0640, freeswitch, daemon) %{_sysconfdir}/%{name}/autoload_configs/erlang_event.conf.xml
-%config(noreplace) %attr(0640, freeswitch, daemon) %{_sysconfdir}/%{name}/autoload_configs/event_multicast.conf.xml
-%config(noreplace) %attr(0640, freeswitch, daemon) %{_sysconfdir}/%{name}/autoload_configs/event_socket.conf.xml
-%config(noreplace) %attr(0640, freeswitch, daemon) %{_sysconfdir}/%{name}/autoload_configs/fax.conf.xml
-%config(noreplace) %attr(0640, freeswitch, daemon) %{_sysconfdir}/%{name}/autoload_configs/fifo.conf.xml
-%config(noreplace) %attr(0640, freeswitch, daemon) %{_sysconfdir}/%{name}/autoload_configs/format_cdr.conf.xml
-%config(noreplace) %attr(0640, freeswitch, daemon) %{_sysconfdir}/%{name}/autoload_configs/graylog2.conf.xml
-%config(noreplace) %attr(0640, freeswitch, daemon) %{_sysconfdir}/%{name}/autoload_configs/hash.conf.xml
-%config(noreplace) %attr(0640, freeswitch, daemon) %{_sysconfdir}/%{name}/autoload_configs/hiredis.conf.xml
-%config(noreplace) %attr(0640, freeswitch, daemon) %{_sysconfdir}/%{name}/autoload_configs/httapi.conf.xml
-%config(noreplace) %attr(0640, freeswitch, daemon) %{_sysconfdir}/%{name}/autoload_configs/http_cache.conf.xml
-%config(noreplace) %attr(0640, freeswitch, daemon) %{_sysconfdir}/%{name}/autoload_configs/ivr.conf.xml
-%config(noreplace) %attr(0640, freeswitch, daemon) %{_sysconfdir}/%{name}/autoload_configs/java.conf.xml
-%config(noreplace) %attr(0640, freeswitch, daemon) %{_sysconfdir}/%{name}/autoload_configs/kazoo.conf.xml
-%config(noreplace) %attr(0640, freeswitch, daemon) %{_sysconfdir}/%{name}/autoload_configs/lcr.conf.xml
-%config(noreplace) %attr(0640, freeswitch, daemon) %{_sysconfdir}/%{name}/autoload_configs/local_stream.conf.xml
-%config(noreplace) %attr(0640, freeswitch, daemon) %{_sysconfdir}/%{name}/autoload_configs/logfile.conf.xml
-%config(noreplace) %attr(0640, freeswitch, daemon) %{_sysconfdir}/%{name}/autoload_configs/memcache.conf.xml
-%config(noreplace) %attr(0640, freeswitch, daemon) %{_sysconfdir}/%{name}/autoload_configs/modules.conf.xml
-%config(noreplace) %attr(0640, freeswitch, daemon) %{_sysconfdir}/%{name}/autoload_configs/mongo.conf.xml
-%config(noreplace) %attr(0640, freeswitch, daemon) %{_sysconfdir}/%{name}/autoload_configs/msrp.conf.xml
-%config(noreplace) %attr(0640, freeswitch, daemon) %{_sysconfdir}/%{name}/autoload_configs/nibblebill.conf.xml
-%config(noreplace) %attr(0640, freeswitch, daemon) %{_sysconfdir}/%{name}/autoload_configs/opal.conf.xml
-%config(noreplace) %attr(0640, freeswitch, daemon) %{_sysconfdir}/%{name}/autoload_configs/oreka.conf.xml
-%config(noreplace) %attr(0640, freeswitch, daemon) %{_sysconfdir}/%{name}/autoload_configs/osp.conf.xml
-%config(noreplace) %attr(0640, freeswitch, daemon) %{_sysconfdir}/%{name}/autoload_configs/pocketsphinx.conf.xml
-%config(noreplace) %attr(0640, freeswitch, daemon) %{_sysconfdir}/%{name}/autoload_configs/portaudio.conf.xml
-%config(noreplace) %attr(0640, freeswitch, daemon) %{_sysconfdir}/%{name}/autoload_configs/post_load_modules.conf.xml
-%config(noreplace) %attr(0640, freeswitch, daemon) %{_sysconfdir}/%{name}/autoload_configs/pre_load_modules.conf.xml
-%config(noreplace) %attr(0640, freeswitch, daemon) %{_sysconfdir}/%{name}/autoload_configs/presence_map.conf.xml
-%config(noreplace) %attr(0640, freeswitch, daemon) %{_sysconfdir}/%{name}/autoload_configs/python.conf.xml
-%config(noreplace) %attr(0640, freeswitch, daemon) %{_sysconfdir}/%{name}/autoload_configs/redis.conf.xml
-%config(noreplace) %attr(0640, freeswitch, daemon) %{_sysconfdir}/%{name}/autoload_configs/rss.conf.xml
-%config(noreplace) %attr(0640, freeswitch, daemon) %{_sysconfdir}/%{name}/autoload_configs/rtmp.conf.xml
-%config(noreplace) %attr(0640, freeswitch, daemon) %{_sysconfdir}/%{name}/autoload_configs/sangoma_codec.conf.xml
-%config(noreplace) %attr(0640, freeswitch, daemon) %{_sysconfdir}/%{name}/autoload_configs/shout.conf.xml
-%config(noreplace) %attr(0640, freeswitch, daemon) %{_sysconfdir}/%{name}/autoload_configs/skinny.conf.xml
-%config(noreplace) %attr(0640, freeswitch, daemon) %{_sysconfdir}/%{name}/autoload_configs/smpp.conf.xml
-%config(noreplace) %attr(0640, freeswitch, daemon) %{_sysconfdir}/%{name}/autoload_configs/sms_flowroute.conf.xml
-%config(noreplace) %attr(0640, freeswitch, daemon) %{_sysconfdir}/%{name}/autoload_configs/sndfile.conf.xml
-%config(noreplace) %attr(0640, freeswitch, daemon) %{_sysconfdir}/%{name}/autoload_configs/sofia.conf.xml
-%config(noreplace) %attr(0640, freeswitch, daemon) %{_sysconfdir}/%{name}/autoload_configs/spandsp.conf.xml
-%config(noreplace) %attr(0640, freeswitch, daemon) %{_sysconfdir}/%{name}/autoload_configs/switch.conf.xml
-%config(noreplace) %attr(0640, freeswitch, daemon) %{_sysconfdir}/%{name}/autoload_configs/syslog.conf.xml
-%config(noreplace) %attr(0640, freeswitch, daemon) %{_sysconfdir}/%{name}/autoload_configs/timezones.conf.xml
-%config(noreplace) %attr(0640, freeswitch, daemon) %{_sysconfdir}/%{name}/autoload_configs/translate.conf.xml
-%config(noreplace) %attr(0640, freeswitch, daemon) %{_sysconfdir}/%{name}/autoload_configs/tts_commandline.conf.xml
-%config(noreplace) %attr(0640, freeswitch, daemon) %{_sysconfdir}/%{name}/autoload_configs/unicall.conf.xml
-%config(noreplace) %attr(0640, freeswitch, daemon) %{_sysconfdir}/%{name}/autoload_configs/unimrcp.conf.xml
-%config(noreplace) %attr(0640, freeswitch, daemon) %{_sysconfdir}/%{name}/autoload_configs/v8.conf.xml
-%config(noreplace) %attr(0640, freeswitch, daemon) %{_sysconfdir}/%{name}/autoload_configs/verto.conf.xml
-%config(noreplace) %attr(0640, freeswitch, daemon) %{_sysconfdir}/%{name}/autoload_configs/voicemail_ivr.conf.xml
-%config(noreplace) %attr(0640, freeswitch, daemon) %{_sysconfdir}/%{name}/autoload_configs/voicemail.conf.xml
-%config(noreplace) %attr(0640, freeswitch, daemon) %{_sysconfdir}/%{name}/autoload_configs/vpx.conf.xml
-%config(noreplace) %attr(0640, freeswitch, daemon) %{_sysconfdir}/%{name}/autoload_configs/xml_cdr.conf.xml
-%config(noreplace) %attr(0640, freeswitch, daemon) %{_sysconfdir}/%{name}/autoload_configs/xml_curl.conf.xml
-%config(noreplace) %attr(0640, freeswitch, daemon) %{_sysconfdir}/%{name}/autoload_configs/xml_rpc.conf.xml
-%config(noreplace) %attr(0640, freeswitch, daemon) %{_sysconfdir}/%{name}/autoload_configs/xml_scgi.conf.xml
-%config(noreplace) %attr(0640, freeswitch, daemon) %{_sysconfdir}/%{name}/autoload_configs/zeroconf.conf.xml
+%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/*.tpl
+%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/*.ttml
+%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/*.xml
+%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/extensions.conf
+%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/mime.types
+%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/autoload_configs/abstraction.conf.xml
+%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/autoload_configs/acl.conf.xml
+%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/autoload_configs/alsa.conf.xml
+%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/autoload_configs/amqp.conf.xml
+%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/autoload_configs/amr.conf.xml
+%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/autoload_configs/amrwb.conf.xml
+%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/autoload_configs/av.conf.xml
+%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/autoload_configs/avmd.conf.xml
+%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/autoload_configs/blacklist.conf.xml
+%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/autoload_configs/callcenter.conf.xml
+%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/autoload_configs/cdr_csv.conf.xml
+%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/autoload_configs/cdr_mongodb.conf.xml
+%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/autoload_configs/cdr_pg_csv.conf.xml
+%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/autoload_configs/cdr_sqlite.conf.xml
+%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/autoload_configs/cepstral.conf.xml
+%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/autoload_configs/cidlookup.conf.xml
+%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/autoload_configs/conference_layouts.conf.xml
+%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/autoload_configs/conference.conf.xml
+%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/autoload_configs/console.conf.xml
+%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/autoload_configs/curl.conf.xml
+%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/autoload_configs/db.conf.xml
+%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/autoload_configs/dialplan_directory.conf.xml
+%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/autoload_configs/dingaling.conf.xml
+%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/autoload_configs/directory.conf.xml
+%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/autoload_configs/distributor.conf.xml
+%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/autoload_configs/easyroute.conf.xml
+%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/autoload_configs/enum.conf.xml
+%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/autoload_configs/erlang_event.conf.xml
+%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/autoload_configs/event_multicast.conf.xml
+%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/autoload_configs/event_socket.conf.xml
+%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/autoload_configs/fax.conf.xml
+%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/autoload_configs/fifo.conf.xml
+%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/autoload_configs/format_cdr.conf.xml
+%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/autoload_configs/graylog2.conf.xml
+%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/autoload_configs/hash.conf.xml
+%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/autoload_configs/hiredis.conf.xml
+%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/autoload_configs/httapi.conf.xml
+%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/autoload_configs/http_cache.conf.xml
+%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/autoload_configs/ivr.conf.xml
+%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/autoload_configs/java.conf.xml
+%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/autoload_configs/kazoo.conf.xml
+%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/autoload_configs/lcr.conf.xml
+%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/autoload_configs/local_stream.conf.xml
+%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/autoload_configs/logfile.conf.xml
+%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/autoload_configs/memcache.conf.xml
+%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/autoload_configs/modules.conf.xml
+%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/autoload_configs/mongo.conf.xml
+%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/autoload_configs/msrp.conf.xml
+%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/autoload_configs/nibblebill.conf.xml
+%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/autoload_configs/opal.conf.xml
+%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/autoload_configs/oreka.conf.xml
+%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/autoload_configs/osp.conf.xml
+%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/autoload_configs/pocketsphinx.conf.xml
+%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/autoload_configs/portaudio.conf.xml
+%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/autoload_configs/post_load_modules.conf.xml
+%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/autoload_configs/pre_load_modules.conf.xml
+%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/autoload_configs/presence_map.conf.xml
+%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/autoload_configs/python.conf.xml
+%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/autoload_configs/redis.conf.xml
+%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/autoload_configs/rss.conf.xml
+%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/autoload_configs/rtmp.conf.xml
+%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/autoload_configs/sangoma_codec.conf.xml
+%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/autoload_configs/shout.conf.xml
+%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/autoload_configs/skinny.conf.xml
+%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/autoload_configs/smpp.conf.xml
+%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/autoload_configs/sms_flowroute.conf.xml
+%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/autoload_configs/sndfile.conf.xml
+%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/autoload_configs/sofia.conf.xml
+%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/autoload_configs/spandsp.conf.xml
+%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/autoload_configs/switch.conf.xml
+%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/autoload_configs/syslog.conf.xml
+%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/autoload_configs/timezones.conf.xml
+%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/autoload_configs/translate.conf.xml
+%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/autoload_configs/tts_commandline.conf.xml
+%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/autoload_configs/unicall.conf.xml
+%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/autoload_configs/unimrcp.conf.xml
+%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/autoload_configs/v8.conf.xml
+%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/autoload_configs/verto.conf.xml
+%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/autoload_configs/voicemail_ivr.conf.xml
+%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/autoload_configs/voicemail.conf.xml
+%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/autoload_configs/vpx.conf.xml
+%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/autoload_configs/xml_cdr.conf.xml
+%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/autoload_configs/xml_curl.conf.xml
+%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/autoload_configs/xml_rpc.conf.xml
+%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/autoload_configs/xml_scgi.conf.xml
+%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/autoload_configs/zeroconf.conf.xml
 # Chatplans
-%config(noreplace) %attr(0640, freeswitch, daemon) %{_sysconfdir}/%{name}/chatplan/default.xml
+%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/chatplan/default.xml
 # Dialplans
-%config(noreplace) %attr(0640, freeswitch, daemon) %{_sysconfdir}/%{name}/dialplan/*.xml
-%config(noreplace) %attr(0640, freeswitch, daemon) %{_sysconfdir}/%{name}/dialplan/default/*.xml
-%config(noreplace) %attr(0640, freeswitch, daemon) %{_sysconfdir}/%{name}/dialplan/public/*.xml
-%config(noreplace) %attr(0640, freeswitch, daemon) %{_sysconfdir}/%{name}/dialplan/skinny-patterns/20-Demo.xml
-%config(noreplace) %attr(0640, freeswitch, daemon) %{_sysconfdir}/%{name}/dialplan/skinny-patterns/20-Local_extension.xml
-%config(noreplace) %attr(0640, freeswitch, daemon) %{_sysconfdir}/%{name}/dialplan/skinny-patterns/90-External.xml
-%config(noreplace) %attr(0640, freeswitch, daemon) %{_sysconfdir}/%{name}/dialplan/skinny-patterns/99-Default_Drop.xml
+%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/dialplan/*.xml
+%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/dialplan/default/*.xml
+%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/dialplan/public/*.xml
+%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/dialplan/skinny-patterns/20-Demo.xml
+%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/dialplan/skinny-patterns/20-Local_extension.xml
+%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/dialplan/skinny-patterns/90-External.xml
+%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/dialplan/skinny-patterns/99-Default_Drop.xml
 # Fonts
-%config(noreplace) %attr(0640, freeswitch, daemon) %{_datadir}/freeswitch/fonts/*.ttf
-%config(noreplace) %attr(0640, freeswitch, daemon) %{_datadir}/freeswitch/fonts/OFL.txt
-%config(noreplace) %attr(0640, freeswitch, daemon) %{_datadir}/freeswitch/fonts/README.fonts
+%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_datadir}/freeswitch/fonts/*.ttf
+%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_datadir}/freeswitch/fonts/OFL.txt
+%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_datadir}/freeswitch/fonts/README.fonts
 # User Directories
-%config(noreplace) %attr(0640, freeswitch, daemon) %{_sysconfdir}/%{name}/directory/*.xml
-%config(noreplace) %attr(0640, freeswitch, daemon) %{_sysconfdir}/%{name}/directory/default/*
+%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/directory/*.xml
+%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/directory/default/*
 # IVR Menues
-%config(noreplace) %attr(0640, freeswitch, daemon) %{_sysconfdir}/%{name}/ivr_menus/*.xml
+%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/ivr_menus/*.xml
 # Sip Profiles
-%config(noreplace) %attr(0640, freeswitch, daemon) %{_sysconfdir}/%{name}/sip_profiles/*.xml
-%config(noreplace) %attr(0640, freeswitch, daemon) %{_sysconfdir}/%{name}/sip_profiles/external/*.xml
-%config(noreplace) %attr(0640, freeswitch, daemon) %{_sysconfdir}/%{name}/sip_profiles/external-ipv6/*.xml
+%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/sip_profiles/*.xml
+%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/sip_profiles/external/*.xml
+%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/sip_profiles/external-ipv6/*.xml
 # Other Protocol Profiles
-%config(noreplace) %attr(0640, freeswitch, daemon) %{_sysconfdir}/%{name}/jingle_profiles/*.xml
-%config(noreplace) %attr(0640, freeswitch, daemon) %{_sysconfdir}/%{name}/mrcp_profiles/*.xml
-%config(noreplace) %attr(0640, freeswitch, daemon) %{_sysconfdir}/%{name}/skinny_profiles/internal.xml
+%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/jingle_profiles/*.xml
+%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/mrcp_profiles/*.xml
+%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/skinny_profiles/internal.xml
 
 
 # Application Packages Modules
 %files application-abstraction
-#%%attr(0644,-,-) %%{_libdir}/%%{name}/mod/mod_abstraction.so*
+%{_libdir}/%{name}/mod/mod_abstraction.so*
 
 %files application-avmd
-#%%attr(0644,-,-) %%{_libdir}/%%{name}/mod/mod_avmd.so*
+%{_libdir}/%{name}/mod/mod_avmd.so*
+
+%files application-bert
+%{_libdir}/%{name}/mod/mod_bert.so*
 
 %files application-blacklist
-#%%attr(0644,-,-) %%{_libdir}/%%{name}/mod/mod_blacklist.so*
+%{_libdir}/%{name}/mod/mod_blacklist.so*
 
 %files application-callcenter
-#%%attr(0644,-,-) %%{_libdir}/%%{name}/mod/mod_callcenter.so*
+%{_libdir}/%{name}/mod/mod_callcenter.so*
 
 %files application-cidlookup
-#%%attr(0644,-,-) %%{_libdir}/%%{name}/mod/mod_cidlookup.so*
+%{_libdir}/%{name}/mod/mod_cidlookup.so*
+
+%files application-commands
+%{_libdir}/%{name}/mod/mod_commands.so*
 
 %files application-conference
-#%%attr(0644,-,-) %%{_libdir}/%%{name}/mod/mod_conference.so*
+%{_libdir}/%{name}/mod/mod_conference.so*
 
 %files application-curl
-#%%attr(0644,-,-) %%{_libdir}/%%{name}/mod/mod_curl.so*
+%{_libdir}/%{name}/mod/mod_curl.so*
 
 %files application-db
-#%%attr(0644,-,-) %%{_libdir}/%%{name}/mod/mod_db.so*
+%{_libdir}/%{name}/mod/mod_db.so*
 
 %files application-directory
-#%%attr(0644,-,-) %%{_libdir}/%%{name}/mod/mod_directory.so*
+%{_libdir}/%{name}/mod/mod_directory.so*
 
 %files application-distributor
-#%%attr(0644,-,-) %%{_libdir}/%%{name}/mod/mod_distributor.so*
+%{_libdir}/%{name}/mod/mod_distributor.so*
+
+%files application-dptools
+%{_libdir}/%{name}/mod/mod_dptools.so*
 
 %files application-easyroute
-#%%attr(0644,-,-) %%{_libdir}/%%{name}/mod/mod_easyroute.so*
+%{_libdir}/%{name}/mod/mod_easyroute.so*
 
 %files application-enum
-#%%attr(0644,-,-) %%{_libdir}/%%{name}/mod/mod_enum.so*
+%{_libdir}/%{name}/mod/mod_enum.so*
 
 %files application-esf
-#%%attr(0644,-,-) %%{_libdir}/%%{name}/mod/mod_esf.so*
+%{_libdir}/%{name}/mod/mod_esf.so*
 
 %files application-expr
-#%%attr(0644,-,-) %%{_libdir}/%%{name}/mod/mod_expr.so*
+%{_libdir}/%{name}/mod/mod_expr.so*
 
 %files application-fifo
-#%%attr(0644,-,-) %%{_libdir}/%%{name}/mod/mod_fifo.so*
+%{_libdir}/%{name}/mod/mod_fifo.so*
 
 %files application-fsk
-#%%attr(0644,-,-) %%{_libdir}/%%{name}/mod/mod_fsk.so*
+%{_libdir}/%{name}/mod/mod_fsk.so*
 
 %files application-fsv
-#%%attr(0644,-,-) %%{_libdir}/%%{name}/mod/mod_fsv.so*
+%{_libdir}/%{name}/mod/mod_fsv.so*
 
 %files application-hash
-#%%attr(0644,-,-) %%{_libdir}/%%{name}/mod/mod_hash.so*
+%{_libdir}/%{name}/mod/mod_hash.so*
+
+%files application-hiredis
+%{_libdir}/%{name}/mod/mod_hiredis.so*
 
 %files application-httapi
-#%%attr(0644,-,-) %%{_libdir}/%%{name}/mod/mod_httapi.so*
+%{_libdir}/%{name}/mod/mod_httapi.so*
 
 %files application-http-cache
-#%%attr(0644,-,-) %%{_libdir}/%%{name}/mod/mod_http_cache.so*
+%{_libdir}/%{name}/mod/mod_http_cache.so*
+
+%files application-ladspa
+%{_libdir}/%{name}/mod/mod_ladspa.so*
 
 %files application-lcr
-#%%attr(0644,-,-) %%{_libdir}/%%{name}/mod/mod_lcr.so*
+%{_libdir}/%{name}/mod/mod_lcr.so*
 
 %files application-memcache
-#%%attr(0644,-,-) %%{_libdir}/%%{name}/mod/mod_memcache.so*
+%{_libdir}/%{name}/mod/mod_memcache.so*
 
 %files application-nibblebill
-#%%attr(0644,-,-) %%{_libdir}/%%{name}/mod/mod_nibblebill.so*
+%{_libdir}/%{name}/mod/mod_nibblebill.so*
+
+%files application-oreka
+%{_libdir}/%{name}/mod/mod_oreka.so*
+
+%files application-prefix
+%{_libdir}/%{name}/mod/mod_prefix.so*
 
 %files application-redis
-#%%attr(0644,-,-) %%{_libdir}/%%{name}/mod/mod_redis.so*
+%{_libdir}/%{name}/mod/mod_redis.so*
 
 %files application-rss
-#%%attr(0644,-,-) %%{_libdir}/%%{name}/mod/mod_rss.so*
+%{_libdir}/%{name}/mod/mod_rss.so*
 
 %files application-sms
-#%%attr(0644,-,-) %%{_libdir}/%%{name}/mod/mod_sms.so*
+%{_libdir}/%{name}/mod/mod_sms.so*
 
 %files application-snapshot
-#%%attr(0644,-,-) %%{_libdir}/%%{name}/mod/mod_snapshot.so*
+%{_libdir}/%{name}/mod/mod_snapshot.so*
+
+%files application-sonar
+%{_libdir}/%{name}/mod/mod_sonar.so*
 
 %files application-soundtouch
-#%%attr(0644,-,-) %%{_libdir}/%%{name}/mod/mod_soundtouch.so*
+%{_libdir}/%{name}/mod/mod_soundtouch.so*
+
+%files application-spandsp
+%{_libdir}/%{name}/mod/mod_spandsp.so*
 
 %files application-spy
-#%%attr(0644,-,-) %%{_libdir}/%%{name}/mod/mod_spy.so*
+%{_libdir}/%{name}/mod/mod_spy.so*
 
 %files application-stress
-#%%attr(0644,-,-) %%{_libdir}/%%{name}/mod/mod_stress.so*
+%{_libdir}/%{name}/mod/mod_stress.so*
 
 %files application-translate
-#%%attr(0644,-,-) %%{_libdir}/%%{name}/mod/mod_translate.so*
+%{_libdir}/%{name}/mod/mod_translate.so*
 
 %files application-valet_parking
-#%%attr(0644,-,-) %%{_libdir}/%%{name}/mod/mod_valet_parking.so*
+%{_libdir}/%{name}/mod/mod_valet_parking.so*
 
 %files application-video_filter
-#%%attr(0644,-,-) %%{_libdir}/%%{name}/mod/mod_video_filter.so*
+%{_libdir}/%{name}/mod/mod_video_filter.so*
+
+%files application-vmd
+%{_libdir}/%{name}/mod/mod_vmd.so*
 
 %files application-voicemail
-#%%attr(0644,-,-) %%{_libdir}/%%{name}/mod/mod_voicemail.so*
+%{_libdir}/%{name}/mod/mod_voicemail.so*
 
 %files application-voicemail-ivr
-#%%attr(0644,-,-) %%{_libdir}/%%{name}/mod/mod_voicemail_ivr.so*
+%{_libdir}/%{name}/mod/mod_voicemail_ivr.so*
 
 
 # ASR TTS Modules
 %files asrtts-tts-commandline
-#%%attr(0644,-,-) %%{_libdir}/%%{name}/mod/mod_tts_commandline.so*
+%{_libdir}/%{name}/mod/mod_tts_commandline.so*
 
 %files asrtts-unimrcp
-#%%attr(0644,-,-) %%{_libdir}/%%{name}/mod/mod_unimrcp.so*
+%{_libdir}/%{name}/mod/mod_unimrcp.so*
 
 
 # Codec Modules
 %files codec-passthru-amr
-#%%attr(0644,-,-) %%{_libdir}/%%{name}/mod/mod_amr.so*
+%{_libdir}/%{name}/mod/mod_amr.so*
 
 %files codec-passthru-amrwb
-#%%attr(0644,-,-) %%{_libdir}/%%{name}/mod/mod_amrwb.so*
+%{_libdir}/%{name}/mod/mod_amrwb.so*
 
 %files codec-codec2
-#%%attr(0644,-,-) %%{_libdir}/%%{name}/mod/mod_codec2.so*
+%{_libdir}/%{name}/mod/mod_codec2.so*
+
+%files codec-dahdi
+%{_libdir}/%{name}/mod/mod_dahdi_codec.so*
 
 %files codec-passthru-g723_1
-#%%attr(0644,-,-) %%{_libdir}/%%{name}/mod/mod_g723_1.so*
+%{_libdir}/%{name}/mod/mod_g723_1.so*
 
 %files codec-h26x
-#%%attr(0644,-,-) %%{_libdir}/%%{name}/mod/mod_h26x.so*
+%{_libdir}/%{name}/mod/mod_h26x.so*
 
 %files codec-isac
-#%%attr(0644,-,-) %%{_libdir}/%%{name}/mod/mod_isac.so*
+%{_libdir}/%{name}/mod/mod_isac.so*
 
 %files codec-mp4v
-#%%attr(0644,-,-) %%{_libdir}/%%{name}/mod/mod_mp4v.so*
+%{_libdir}/%{name}/mod/mod_mp4v.so*
 
 %files codec-opus
-#%%attr(0644,-,-) %%{_libdir}/%%{name}/mod/mod_opus.so*
-%config(noreplace) %attr(0640, freeswitch, daemon) %{_sysconfdir}/%{name}/autoload_configs/opus.conf.xml
+%{_libdir}/%{name}/mod/mod_opus.so*
+%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/autoload_configs/opus.conf.xml
 
 %files codec-theora
-#%%attr(0644,-,-) %%{_libdir}/%%{name}/mod/mod_theora.so*
+%{_libdir}/%{name}/mod/mod_theora.so*
 
 
 # Database Modules
 %files database-mariadb
-#%%attr(0644,-,-) %%{_libdir}/%%{name}/mod/mod_mariadb.so*
+%{_libdir}/%{name}/mod/mod_mariadb.so*
 
 %files database-pgsql
-#%%attr(0644,-,-) %%{_libdir}/%%{name}/mod/mod_pgsql.so*
+%{_libdir}/%{name}/mod/mod_pgsql.so*
+
+
+# Dialplan Modules
+%files dialplan-directory
+%{_libdir}/%{name}/mod/mod_dialplan_directory.so*
+
+%files dialplan-xml
+%{_libdir}/%{name}/mod/mod_dialplan_xml.so*
 
 
 # Endpoint Modules
-%files endpoint-portaudio
-#%%attr(0644,-,-) %%{_libdir}/%%{name}/mod/mod_portaudio.so*
+%files endpoint-alsa
+%{_libdir}/%{name}/mod/mod_alsa.so*
 
-%files endpoint-rtmp
-#%%attr(0644,-,-) %%{_libdir}/%%{name}/mod/mod_rtmp.so*
+%files endpoint-dingaling
+%{_libdir}/%{name}/mod/mod_dingaling.so*
 
-%files endpoint-verto
-#%%attr(0644,-,-) %%{_libdir}/%%{name}/mod/mod_verto.so*
+%files endpoint-loopback
+%{_libdir}/%{name}/mod/mod_portaudio.so*
+
+%files endpoint-loopback
+%{_libdir}/%{name}/mod/mod_portaudio.so*
 
 %files endpoint-rtc
-#%%attr(0644,-,-) %%{_libdir}/%%{name}/mod/mod_rtc.so*
+%{_libdir}/%{name}/mod/mod_rtc.so*
+
+%files endpoint-rtmp
+%{_libdir}/%{name}/mod/mod_rtmp.so*
+
+%files endpoint-sofia
+%{_libdir}/%{name}/mod/mod_sofia.so*
+
+%files endpoint-verto
+%{_libdir}/%{name}/mod/mod_verto.so*
 
 
-# Event Modules
+# Event Handler Modules
+%files event-amqp
+%{_libdir}/%{name}/mod/mod_amqp.so*
+
+%files event-cdr-csv
+%{_libdir}/%{name}/mod/mod_cdr_csv.so*
+
 %files event-cdr-pg-csv
-#%%attr(0644,-,-) %%{_libdir}/%%{name}/mod/mod_cdr_pg_csv.so*
+%{_libdir}/%{name}/mod/mod_cdr_pg_csv.so*
 
 %files event-cdr-sqlite
-#%%attr(0644,-,-) %%{_libdir}/%%{name}/mod/mod_cdr_sqlite.so*
+%{_libdir}/%{name}/mod/mod_cdr_sqlite.so*
 
 %files event-erlang-event
-#%%attr(0644,-,-) %%{_libdir}/%%{name}/mod/mod_erlang_event.so*
-
-%files event-format-cdr
-#%%attr(0644,-,-) %%{_libdir}/%%{name}/mod/mod_format_cdr.so*
+%{_libdir}/%{name}/mod/mod_erlang_event.so*
 
 %files event-multicast
-#%%attr(0644,-,-) %%{_libdir}/%%{name}/mod/mod_event_multicast.so*
+%{_libdir}/%{name}/mod/mod_event_multicast.so*
+
+%files event-socket
+%{_libdir}/%{name}/mod/mod_event_socket.so*
+
+%files event-format-cdr
+%{_libdir}/%{name}/mod/mod_format_cdr.so*
 
 %files event-json-cdr
-#%%attr(0644,-,-) %%{_libdir}/%%{name}/mod/mod_json_cdr.so*
+%{_libdir}/%{name}/mod/mod_json_cdr.so*
 
-%files kazoo
-#%%attr(0644,-,-) %%{_libdir}/%%{name}/mod/mod_kazoo.so*
+%files event-kazoo
+%{_libdir}/%{name}/mod/mod_kazoo.so*
 
+%files event-odbc-cdr
+%{_libdir}/%{name}/mod/mod_odbc_cdr.so*
 
 # Format Modules
+%files format-imagick
+%{_libdir}/%{name}/mod/mod_imagick.so*
+
 %files format-local-stream
-#%%attr(0644,-,-) %%{_libdir}/%%{name}/mod/mod_local_stream.so*
+%{_libdir}/%{name}/mod/mod_local_stream.so*
 
 %files format-native-file
-#%%attr(0644,-,-) %%{_libdir}/%%{name}/mod/mod_native_file.so*
+%{_libdir}/%{name}/mod/mod_native_file.so*
+
+%files format-png
+%{_libdir}/%{name}/mod/mod_png.so*
 
 %files format-portaudio-stream
-#%%attr(0644,-,-) %%{_libdir}/%%{name}/mod/mod_portaudio_stream.so*
+%{_libdir}/%{name}/mod/mod_portaudio_stream.so*
 
 %files format-shell-stream
-#%%attr(0644,-,-) %%{_libdir}/%%{name}/mod/mod_shell_stream.so*
+%{_libdir}/%{name}/mod/mod_shell_stream.so*
 
 %files format-mod-shout
-#%%attr(0644,-,-) %%{_libdir}/%%{name}/mod/mod_shout.so*
+%{_libdir}/%{name}/mod/mod_shout.so*
+
+%files format-mod-sndfile
+%{_libdir}/%{name}/mod/mod_sndfile.so*
 
 %files format-tone-stream
-#%%attr(0644,-,-) %%{_libdir}/%%{name}/mod/mod_tone_stream.so*
+%{_libdir}/%{name}/mod/mod_tone_stream.so*
 
 
 # Programming Language Modules
 %files lua
-#%%attr(0644,-,-) %%{_libdir}/%%{name}/mod/mod_lua*.so*
-%dir %attr(0750, freeswitch, daemon) %{_sysconfdir}/%{name}/autoload_configs
-%config(noreplace) %attr(0640, freeswitch, daemon) %{_sysconfdir}/%{name}/autoload_configs/lua.conf.xml
+%{_libdir}/%{name}/mod/mod_lua*.so*
+%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/autoload_configs/lua.conf.xml
 
 %files perl
-#%%attr(0644,-,-) %%{_libdir}/%%{name}/mod/mod_perl*.so*
-%attr(0644,-,-) %{_prefix}/perl/*
-%dir %attr(0750, freeswitch, daemon) %{_sysconfdir}/%{name}/autoload_configs
-%config(noreplace) %attr(0640, freeswitch, daemon) %{_sysconfdir}/%{name}/autoload_configs/perl.conf.xml
+%{_libdir}/%{name}/mod/mod_perl*.so*
+%{_prefix}/perl/*
+%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/autoload_configs/perl.conf.xml
 
-
-# Language Modules
-%files lang-en
-%dir %attr(0750, freeswitch, daemon) %{_sysconfdir}/%{name}/lang/en
-%dir %attr(0750, freeswitch, daemon) %{_sysconfdir}/%{name}/lang/en/demo
-%dir %attr(0750, freeswitch, daemon) %{_sysconfdir}/%{name}/lang/en/vm
-%dir %attr(0750, freeswitch, daemon) %{_sysconfdir}/%{name}/lang/en/dir
-%dir %attr(0750, freeswitch, daemon) %{_sysconfdir}/%{name}/lang/en/ivr
-%config(noreplace) %attr(0640, freeswitch, daemon) %{_sysconfdir}/%{name}/lang/en/*.xml
-%config(noreplace) %attr(0640, freeswitch, daemon) %{_sysconfdir}/%{name}/lang/en/demo/*.xml
-%config(noreplace) %attr(0640, freeswitch, daemon) %{_sysconfdir}/%{name}/lang/en/vm/*.xml
-%config(noreplace) %attr(0640, freeswitch, daemon) %{_sysconfdir}/%{name}/lang/en/dir/*.xml
-%config(noreplace) %attr(0640, freeswitch, daemon) %{_sysconfdir}/%{name}/lang/en/ivr/*.xml
-#%%attr(0644,-,-) %%{_libdir}/%%{name}/mod/mod_say_en.so*
-
-%files lang-de
-%dir %attr(0750, freeswitch, daemon) %{_sysconfdir}/%{name}/lang/de
-%dir %attr(0750, freeswitch, daemon) %{_sysconfdir}/%{name}/lang/de/demo
-%dir %attr(0750, freeswitch, daemon) %{_sysconfdir}/%{name}/lang/de/vm
-%config(noreplace) %attr(0640, freeswitch, daemon) %{_sysconfdir}/%{name}/lang/de/*.xml
-%config(noreplace) %attr(0640, freeswitch, daemon) %{_sysconfdir}/%{name}/lang/de/demo/*.xml
-%config(noreplace) %attr(0640, freeswitch, daemon) %{_sysconfdir}/%{name}/lang/de/vm/*.xml
-#%%attr(0644,-,-) %%{_libdir}/%%{name}/mod/mod_say_de.so*
-
-%files lang-fr
-%dir %attr(0750, freeswitch, daemon) %{_sysconfdir}/%{name}/lang/fr
-%dir %attr(0750, freeswitch, daemon) %{_sysconfdir}/%{name}/lang/fr/demo
-%dir %attr(0750, freeswitch, daemon) %{_sysconfdir}/%{name}/lang/fr/vm
-%dir %attr(0750, freeswitch, daemon) %{_sysconfdir}/%{name}/lang/fr/dir
-%config(noreplace) %attr(0640, freeswitch, daemon) %{_sysconfdir}/%{name}/lang/fr/*.xml
-%config(noreplace) %attr(0640, freeswitch, daemon) %{_sysconfdir}/%{name}/lang/fr/demo/*.xml
-%config(noreplace) %attr(0640, freeswitch, daemon) %{_sysconfdir}/%{name}/lang/fr/vm/*.xml
-%config(noreplace) %attr(0640, freeswitch, daemon) %{_sysconfdir}/%{name}/lang/fr/dir/*.xml
-#%%attr(0644,-,-) %%{_libdir}/%%{name}/mod/mod_say_fr.so*
-
-%files lang-ru
-%dir %attr(0750, freeswitch, daemon) %{_sysconfdir}/%{name}/lang/ru
-%dir %attr(0750, freeswitch, daemon) %{_sysconfdir}/%{name}/lang/ru/demo
-%dir %attr(0750, freeswitch, daemon) %{_sysconfdir}/%{name}/lang/ru/vm
-%dir %attr(0750, freeswitch, daemon) %{_sysconfdir}/%{name}/lang/ru/dir
-%config(noreplace) %attr(0640, freeswitch, daemon) %{_sysconfdir}/%{name}/lang/ru/*.xml
-%config(noreplace) %attr(0640, freeswitch, daemon) %{_sysconfdir}/%{name}/lang/ru/demo/*.xml
-%config(noreplace) %attr(0640, freeswitch, daemon) %{_sysconfdir}/%{name}/lang/ru/vm/*.xml
-%config(noreplace) %attr(0640, freeswitch, daemon) %{_sysconfdir}/%{name}/lang/ru/dir/*.xml
-#%%attr(0644,-,-) %%{_libdir}/%%{name}/mod/mod_say_ru.so*
-
-%files lang-he
-%dir %attr(0750, freeswitch, daemon) %{_sysconfdir}/%{name}/lang/he/
-%dir %attr(0750, freeswitch, daemon) %{_sysconfdir}/%{name}/lang/he/demo
-%dir %attr(0750, freeswitch, daemon) %{_sysconfdir}/%{name}/lang/he/vm
-%dir %attr(0750, freeswitch, daemon) %{_sysconfdir}/%{name}/lang/he/dir
-%config(noreplace) %attr(0640, freeswitch, daemon) %{_sysconfdir}/%{name}/lang/he/*.xml
-%config(noreplace) %attr(0640, freeswitch, daemon) %{_sysconfdir}/%{name}/lang/he/demo/*.xml
-%config(noreplace) %attr(0640, freeswitch, daemon) %{_sysconfdir}/%{name}/lang/he/vm/*.xml
-%config(noreplace) %attr(0640, freeswitch, daemon) %{_sysconfdir}/%{name}/lang/he/dir/*.xml
-#%%attr(0644,-,-) %%{_libdir}/%%{name}/mod/mod_say_he.so*
-
-%files lang-es
-%dir %attr(0750, freeswitch, daemon) %{_sysconfdir}/%{name}/lang/es
-%dir %attr(0750, freeswitch, daemon) %{_sysconfdir}/%{name}/lang/es/demo
-%dir %attr(0750, freeswitch, daemon) %{_sysconfdir}/%{name}/lang/es/vm
-%dir %attr(0750, freeswitch, daemon) %{_sysconfdir}/%{name}/lang/es/dir
-%config(noreplace) %attr(0640, freeswitch, daemon) %{_sysconfdir}/%{name}/lang/es/*.xml
-%config(noreplace) %attr(0640, freeswitch, daemon) %{_sysconfdir}/%{name}/lang/es/demo/*.xml
-%config(noreplace) %attr(0640, freeswitch, daemon) %{_sysconfdir}/%{name}/lang/es/vm/*.xml
-%config(noreplace) %attr(0640, freeswitch, daemon) %{_sysconfdir}/%{name}/lang/es/dir/*.xml
-#%%attr(0644,-,-) %%{_libdir}/%%{name}/mod/mod_say_es.so*
-
-%files lang-pt
-%dir %attr(0750, freeswitch, daemon) %{_sysconfdir}/%{name}/lang/pt
-%dir %attr(0750, freeswitch, daemon) %{_sysconfdir}/%{name}/lang/pt/demo
-%dir %attr(0750, freeswitch, daemon) %{_sysconfdir}/%{name}/lang/pt/vm
-%dir %attr(0750, freeswitch, daemon) %{_sysconfdir}/%{name}/lang/pt/dir
-%config(noreplace) %attr(0640, freeswitch, daemon) %{_sysconfdir}/%{name}/lang/pt/*.xml
-%config(noreplace) %attr(0640, freeswitch, daemon) %{_sysconfdir}/%{name}/lang/pt/demo/*.xml
-%config(noreplace) %attr(0640, freeswitch, daemon) %{_sysconfdir}/%{name}/lang/pt/vm/*.xml
-%config(noreplace) %attr(0640, freeswitch, daemon) %{_sysconfdir}/%{name}/lang/pt/dir/*.xml
-#%%attr(0644,-,-) %%{_libdir}/%%{name}/mod/mod_say_pt.so*
-
-%files lang-sv
-%dir %attr(0750, freeswitch, daemon) %{_sysconfdir}/%{name}/lang/sv
-%dir %attr(0750, freeswitch, daemon) %{_sysconfdir}/%{name}/lang/sv/vm
-%config(noreplace) %attr(0640, freeswitch, daemon) %{_sysconfdir}/%{name}/lang/sv/*.xml
-%config(noreplace) %attr(0640, freeswitch, daemon) %{_sysconfdir}/%{name}/lang/sv/vm/*.xml
-#%%attr(0644,-,-) %%{_libdir}/%%{name}/mod/mod_say_sv.so*
+%files yaml
+%{_libdir}/%{name}/mod/mod_yaml*.so*
+%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/autoload_configs/yaml.conf.xml
 
 
 # Logger Modules
+%files logger-console
+%{_libdir}/%{name}/mod/mod_console.so*
+
 %files logger-graylog2
-#%%attr(0644,-,-) %%{_libdir}/%%{name}/mod/mod_graylog2.so*
+%{_libdir}/%{name}/mod/mod_graylog2.so*
+
+%files logger-logfile
+%{_libdir}/%{name}/mod/mod_logfile.so*
+
+%files logger-syslog
+%{_libdir}/%{name}/mod/mod_syslog.so*
+
+
+# Language Modules
+%files lang-de
+%dir %attr(0750, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/de
+%dir %attr(0750, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/de/demo
+%dir %attr(0750, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/de/vm
+%dir %attr(0750, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/de/dir
+%dir %attr(0750, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/de/ivr
+%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/de/*.xml
+%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/de/*/*.xml
+%{_libdir}/%{name}/mod/mod_say_de.so*
+
+%files lang-en
+%dir %attr(0750, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/en
+%dir %attr(0750, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/en/demo
+%dir %attr(0750, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/en/vm
+%dir %attr(0750, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/en/dir
+%dir %attr(0750, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/en/ivr
+%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/en/*.xml
+%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/en/*/*.xml
+%{_libdir}/%{name}/mod/mod_say_en.so*
+
+%files lang-es
+%dir %attr(0750, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/es
+%dir %attr(0750, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/es/demo
+%dir %attr(0750, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/es/vm
+%dir %attr(0750, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/es/dir
+%dir %attr(0750, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/es/ivr
+%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/es/*.xml
+%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/es/*/*.xml
+%{_libdir}/%{name}/mod/mod_say_es.so*
+
+%files lang-es-ar
+%dir %attr(0750, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/es-ar
+%dir %attr(0750, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/es-ar/demo
+%dir %attr(0750, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/es-ar/vm
+%dir %attr(0750, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/es-ar/dir
+%dir %attr(0750, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/es-ar/ivr
+%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/es-ar/*.xml
+%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/es-ar/*/*.xml
+%{_libdir}/%{name}/mod/mod_say_es_ar.so*
+
+%files lang-fa
+%dir %attr(0750, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/fa
+%dir %attr(0750, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/fa/demo
+%dir %attr(0750, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/fa/vm
+%dir %attr(0750, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/fa/dir
+%dir %attr(0750, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/fa/ivr
+%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/fa/*.xml
+%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/fa/*/*.xml
+%{_libdir}/%{name}/mod/mod_say_fa.so*
+
+%files lang-fr
+%dir %attr(0750, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/fr
+%dir %attr(0750, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/fr/demo
+%dir %attr(0750, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/fr/vm
+%dir %attr(0750, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/fr/dir
+%dir %attr(0750, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/fr/ivr
+%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/fr/*.xml
+%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/fr/*/*.xml
+%{_libdir}/%{name}/mod/mod_say_fr.so*
+
+%files lang-he
+%dir %attr(0750, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/he/
+%dir %attr(0750, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/he/demo
+%dir %attr(0750, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/he/vm
+%dir %attr(0750, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/he/dir
+%dir %attr(0750, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/he/ivr
+%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/he/*.xml
+%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/he/*/*.xml
+%{_libdir}/%{name}/mod/mod_say_he.so*
+
+%files lang-hr
+%dir %attr(0750, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/hr/
+%dir %attr(0750, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/hr/demo
+%dir %attr(0750, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/hr/vm
+%dir %attr(0750, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/hr/dir
+%dir %attr(0750, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/hr/ivr
+%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/hr/*.xml
+%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/hr/*/*.xml
+%{_libdir}/%{name}/mod/mod_say_hr.so*
+
+%files lang-hu
+%dir %attr(0750, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/hu/
+%dir %attr(0750, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/hu/demo
+%dir %attr(0750, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/hu/vm
+%dir %attr(0750, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/hu/dir
+%dir %attr(0750, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/hu/ivr
+%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/hu/*.xml
+%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/hu/*/*.xml
+%{_libdir}/%{name}/mod/mod_say_hu.so*
+
+%files lang-it
+%dir %attr(0750, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/it/
+%dir %attr(0750, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/it/demo
+%dir %attr(0750, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/it/vm
+%dir %attr(0750, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/it/dir
+%dir %attr(0750, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/it/ivr
+%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/it/*.xml
+%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/it/*/*.xml
+%{_libdir}/%{name}/mod/mod_say_it.so*
+
+%files lang-ja
+%dir %attr(0750, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/ja/
+%dir %attr(0750, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/ja/demo
+%dir %attr(0750, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/ja/vm
+%dir %attr(0750, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/ja/dir
+%dir %attr(0750, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/ja/ivr
+%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/ja/*.xml
+%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/ja/*/*.xml
+%{_libdir}/%{name}/mod/mod_say_ja.so*
+
+%files lang-nl
+%dir %attr(0750, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/nl/
+%dir %attr(0750, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/nl/demo
+%dir %attr(0750, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/nl/vm
+%dir %attr(0750, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/nl/dir
+%dir %attr(0750, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/nl/ivr
+%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/nl/*.xml
+%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/nl/*/*.xml
+%{_libdir}/%{name}/mod/mod_say_nl.so*
+
+%files lang-pl
+%dir %attr(0750, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/pl/
+%dir %attr(0750, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/pl/demo
+%dir %attr(0750, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/pl/vm
+%dir %attr(0750, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/pl/dir
+%dir %attr(0750, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/pl/ivr
+%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/pl/*.xml
+%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/pl/*/*.xml
+%{_libdir}/%{name}/mod/mod_say_pl.so*
+
+%files lang-pt
+%dir %attr(0750, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/pt
+%dir %attr(0750, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/pt/demo
+%dir %attr(0750, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/pt/vm
+%dir %attr(0750, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/pt/dir
+%dir %attr(0750, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/pt/ivr
+%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/pt/*.xml
+%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/pt/*/*.xml
+%{_libdir}/%{name}/mod/mod_say_pt.so*
+
+%files lang-ru
+%dir %attr(0750, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/ru
+%dir %attr(0750, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/ru/demo
+%dir %attr(0750, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/ru/vm
+%dir %attr(0750, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/ru/dir
+%dir %attr(0750, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/ru/ivr
+%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/ru/*.xml
+%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/ru/*/*.xml
+%{_libdir}/%{name}/mod/mod_say_ru.so*
+
+%files lang-sv
+%dir %attr(0750, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/sv
+%dir %attr(0750, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/sv/demo
+%dir %attr(0750, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/sv/vm
+%dir %attr(0750, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/sv/dir
+%dir %attr(0750, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/sv/ivr
+%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/sv/*.xml
+%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/sv/vm/*.xml
+%{_libdir}/%{name}/mod/mod_say_sv.so*
+
+%files lang-th
+%dir %attr(0750, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/th
+%dir %attr(0750, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/th/demo
+%dir %attr(0750, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/th/vm
+%dir %attr(0750, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/th/dir
+%dir %attr(0750, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/th/ivr
+%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/th/*.xml
+%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/th/vm/*.xml
+%{_libdir}/%{name}/mod/mod_say_th.so*
+
+%files lang-zh
+%dir %attr(0750, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/zh
+%dir %attr(0750, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/zh/demo
+%dir %attr(0750, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/zh/vm
+%dir %attr(0750, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/zh/dir
+%dir %attr(0750, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/zh/ivr
+%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/zh/*.xml
+%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/zh/vm/*.xml
+%{_libdir}/%{name}/mod/mod_say_zh.so*
 
 
 # Timer Modules
 %files timer-posix
-#%%attr(0644,-,-) %%{_libdir}/%%{name}/mod/mod_posix_timer.so*
+%{_libdir}/%{name}/mod/mod_posix_timer.so*
 
 %files timer-timerfd
-#%%attr(0644,-,-) %%{_libdir}/%%{name}/mod/mod_timerfd.so*
+%{_libdir}/%{name}/mod/mod_timerfd.so*
 
 
 # XMLINT  Modules
 %files xml-cdr
-#%%attr(0644,-,-) %%{_libdir}/%%{name}/mod/mod_xml_cdr.so*
+%{_libdir}/%{name}/mod/mod_xml_cdr.so*
 
 %files xml-curl
-#%%attr(0644,-,-) %%{_libdir}/%%{name}/mod/mod_xml_curl.so*
+%{_libdir}/%{name}/mod/mod_xml_curl.so*
+
+%files xml-rpc
+%{_libdir}/%{name}/mod/mod_xml_rpc.so*
+
+%files xml-scgi
+%{_libdir}/%{name}/mod/mod_xml_scgi.so*
 
 
 %changelog

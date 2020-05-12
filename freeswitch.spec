@@ -31,6 +31,7 @@ BuildRequires: hiredis-devel
 BuildRequires: ImageMagick-devel
 BuildRequires: ladspa-devel
 BuildRequires: ldns-devel
+BuildRequires: libasan
 BuildRequires: libjpeg-devel
 BuildRequires: libmemcached-devel
 BuildRequires: libogg-devel

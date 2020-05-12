@@ -689,15 +689,6 @@ Requires: %{name} = %{version}-%{release}
 %description event-cdr-sqlite
 SQLite CDR Logger for FreeSWITCH.
 
-%package event-erlang-event
-Summary:       Erlang Event Module for the FreeSWITCH open source telephony platform
-Requires:      %{name} = %{version}-%{release}
-Requires:      erlang
-BuildRequires: erlang
-
-%description event-erlang-event
-Erlang Event Module for FreeSWITCH.
-
 %package event-multicast
 Summary:       Multicast Event System for the FreeSWITCH open source telephony platform
 Requires:      %{name} = %{version}-%{release}
@@ -1586,9 +1577,6 @@ fi
 
 %files event-cdr-sqlite
 %{_libdir}/%{name}/mod/mod_cdr_sqlite.so*
-
-%files event-erlang-event
-%{_libdir}/%{name}/mod/mod_erlang_event.so*
 
 %files event-multicast
 %{_libdir}/%{name}/mod/mod_event_multicast.so*

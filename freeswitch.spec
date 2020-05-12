@@ -1126,7 +1126,6 @@ autoreconf --force --install
 --enable-system-xmlrpc-c \
 --enable-threads \
 --enable-timerfd-wrapper \
---with-cachedir=%{_localstatedir}/lib/%{name}/cache \
 --with-certsdir=%{_sysconfdir}/pki/tls \
 --with-dbdir=%{_localstatedir}/lib/%{name}/db \
 --with-devrandom=/dev/random \
@@ -1143,7 +1142,6 @@ autoreconf --force --install
 --with-rundir=%{_rundir}/%{name} \
 --with-scriptdir=%{_datadir}/%{name}/scripts \
 --with-soundsdir=%{_datadir}/%{name}/sounds \
---with-storagedir=%{_localstatedir}/lib/%{name}/storage
 
 %{__make}
 
@@ -1191,10 +1189,8 @@ fi
 %files
 # Basic Directory Structure
 %dir %attr(0750, freeswitch, freeswitch) %{_localstatedir}/lib/%{name}
-%dir %attr(0750, freeswitch, freeswitch) %{_localstatedir}/lib/%{name}/cache
 %dir %attr(0750, freeswitch, freeswitch) %{_localstatedir}/lib/%{name}/db
 %dir %attr(0750, freeswitch, freeswitch) %{_localstatedir}/lib/%{name}/images
-%dir %attr(0750, freeswitch, freeswitch) %{_localstatedir}/lib/%{name}/storage
 %dir %attr(0750, freeswitch, freeswitch) %{_localstatedir}/log/%{name}
 %dir %attr(0750, freeswitch, freeswitch) %{_rundir}/%{name}
 %dir %attr(0750, freeswitch, freeswitch) %{_sysconfdir}/%{name}

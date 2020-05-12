@@ -1677,11 +1677,6 @@ fi
 %{_libdir}/%{name}/mod/mod_say_es.so*
 
 %files lang-es-ar
-%dir %attr(0750, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/es-ar
-%dir %attr(0750, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/es-ar/demo
-%dir %attr(0750, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/es-ar/vm
-%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/es-ar/*.xml
-%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/lang/es-ar/*/*.xml
 %{_libdir}/%{name}/mod/mod_say_es_ar.so*
 
 %files lang-fa

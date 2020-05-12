@@ -1633,7 +1633,6 @@ fi
 
 %files yaml
 %{_libdir}/%{name}/mod/mod_yaml*.so*
-%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/autoload_configs/yaml.conf.xml
 
 
 # Logger Modules

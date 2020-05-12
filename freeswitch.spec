@@ -18,13 +18,14 @@ BuildRequires: autoconf
 BuildRequires: autoconf-archive
 BuildRequires: automake
 BuildRequires: bison
+BuildRequires: clang
 BuildRequires: codec2-devel
 BuildRequires: curl-devel
 BuildRequires: db4-devel
 BuildRequires: e2fsprogs-devel
+BuildRequires: gcc
 BuildRequires: gcc-c++
 BuildRequires: gdbm-devel
-BuildRequires: glibc-devel
 BuildRequires: gnutls-devel
 BuildRequires: hiredis-devel
 BuildRequires: ImageMagick-devel

@@ -52,6 +52,7 @@ BuildRequires: pkgconfig
 BuildRequires: portaudio-devel
 BuildRequires: python
 BuildRequires: python-devel
+BuildRequires: redhat-rpm-config
 BuildRequires: redis-devel
 BuildRequires: sofia-sip-devel
 BuildRequires: soundtouch-devel >= 1.7.1
@@ -1117,48 +1118,42 @@ export CFLAGS="%{optflags} -Wno-error=stringop-truncation"
 ./bootstrap.sh
 autoreconf --force --install
 
-%configure -C \
+%configure \
 --disable-core-libedit-support \
 --disable-static \
+--enable-address-sanitizer \
 --enable-core-odbc-support \
 --enable-core-pgsql-support \
 --enable-system-lua \
 --enable-system-xmlrpc-c \
 --enable-threads \
 --enable-timerfd-wrapper \
---with-certsdir=%{_sysconfdir}/pki/tls \
---with-dbdir=%{_localstatedir}/lib/%{name}/db \
---with-devrandom=/dev/random \
 --with-erlang \
---with-grammardir=%{_datadir}/%{name}/grammar \
---with-htdocsdir=%{_datadir}/%{name}/htdocs \
---with-imagesdir=%{_localstatedir}/lib/%{name}/images \
---with-logfiledir=/var/log/%{name} \
---with-modinstdir=%{_libdir}/%{name}/mod \
 --with-odbc \
 --with-openssl \
---with-pkgconfigdir=%{_datadir}/%{name}/pkgconfig \
---with-recordingsdir=%{_localstatedir}/lib/%{name}/recordings \
+--with-certsdir=%{_sysconfdir}/pki/tls \
 --with-rundir=%{_rundir}/%{name} \
---with-scriptdir=%{_datadir}/%{name}/scripts \
---with-soundsdir=%{_datadir}/%{name}/sounds \
+--with-dbdir=%{_localstatedir}/lib/%{name}/db \
+--with-imagesdir=%{_localstatedir}/lib/%{name}/images \
+--with-recordingsdir=%{_localstatedir}/lib/%{name}/recordings \
+--with-storagedir=%{_localstatedir}/lib/%{name}/storage
 
-%{__make}
+
+make %{?_smp_mflags}
 
 
 %install
-%{__make} DESTDIR=%{buildroot} install
+%make_install
 
-%{__mkdir} -p %{buildroot}%{_prefix}/log
-%{__mkdir} -p %{buildroot}/var/log/%{name}
-%{__mkdir} -p %{buildroot}%{_rundir}/%{name}
-%{__install} -Dpm 0644 build/freeswitch.service %{buildroot}%{_unitdir}/freeswitch.service
-%{__install} -Dpm 0644 build/freeswitch-tmpfiles.conf %{buildroot}%{_tmpfilesdir}/freeswitch.conf
-%{__install} -D -m 744 build/freeswitch.sysconfig %{buildroot}/etc/sysconfig/freeswitch
-%{__install} -D -m 644 build/freeswitch.monitrc %{buildroot}/etc/monit.d/freeswitch.monitrc
+mkdir -p %{buildroot}%{_prefix}/log
+mkdir -p %{buildroot}/var/log/%{name}
+mkdir -p %{buildroot}%{_rundir}/%{name}
+install -Dpm 0644 build/freeswitch.service %{buildroot}%{_unitdir}/freeswitch.service
+install -Dpm 0644 build/freeswitch-tmpfiles.conf %{buildroot}%{_tmpfilesdir}/freeswitch.conf
+install -Dpm 0744 build/freeswitch.sysconfig %{buildroot}/etc/sysconfig/freeswitch
+install -Dpm 0644 build/freeswitch.monitrc %{buildroot}/etc/monit.d/freeswitch.monitrc
 
-%{__rm} -f %{buildroot}/%{_libdir}/%{name}/mod/ftmod_sangoma_ss7*
-%{__rm} -f %{buildroot}/%{_libdir}/%{name}/mod/ftmod_sangoma_isdn*
+find . -type f -name \*.la -delete
 
 
 %pre
@@ -1197,7 +1192,7 @@ fi
 %dir %attr(0755, -, -) %{_datadir}/%{name}/grammar
 %dir %attr(0755, -, -) %{_datadir}/%{name}/htdocs
 %dir %attr(0755, -, -) %{_datadir}/%{name}/scripts
-%dir %attr(0755, -, -) %{_datadir}/%{name}/fonts/
+%dir %attr(0755, -, -) %{_datadir}/%{name}/fonts
 # Config Directory Structure
 %dir %attr(0750, freeswitch, freeswitch) %{_sysconfdir}/%{name}/autoload_configs
 %dir %attr(0750, freeswitch, freeswitch) %{_sysconfdir}/%{name}/dialplan
@@ -1213,13 +1208,13 @@ fi
 %dir %attr(0750, freeswitch, freeswitch) %{_sysconfdir}/%{name}/sip_profiles/external
 %dir %attr(0750, freeswitch, freeswitch) %{_sysconfdir}/%{name}/sip_profiles/external-ipv6
 # Other Files
+%{_localstatedir}/lib/%{name}/images/*
 %config(noreplace) %{_datadir}/%{name}/htdocs/*
 %{_unitdir}/freeswitch.service
 %{_tmpfilesdir}/freeswitch.conf
-%config(noreplace) /etc/sysconfig/freeswitch
-%config(noreplace) /etc/monit.d/freeswitch.monitrc
-# CLI
-%attr(0755,-,-) %{_bindir}/fs_cli
+%config(noreplace) %{_sysconfdir}/sysconfig/freeswitch
+%config(noreplace) %{_sysconfdir}/monit.d/freeswitch.monitrc
+%attr(0755,-,-) %{_bindir}/*
 %{_libdir}/libfreeswitch*.so*
 
 

@@ -5,7 +5,7 @@ Version:	1.10.2
 Release:	1%{?dist}
 URL:		http://www.freeswitch.org/
 Source0:	https://github.com/signalwire/freeswitch/archive/v%{version}.tar.gz
-Source1:	build/modules.conf.fedora
+Source1:	modules.conf.fedora
 
 # TODO(lorbus)
 # Add bundled Provides

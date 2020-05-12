@@ -24,6 +24,7 @@ BuildRequires: db4-devel
 BuildRequires: e2fsprogs-devel
 BuildRequires: gcc-c++
 BuildRequires: gdbm-devel
+BuildRequires: glibc-devel
 BuildRequires: gnutls-devel
 BuildRequires: hiredis-devel
 BuildRequires: ImageMagick-devel

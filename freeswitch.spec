@@ -159,13 +159,6 @@ Requires: %{name} = %{version}-%{release}
 %description application-commands
 mod_commands processes the FreeSWITCH API commands.
 
-%package application-conference
-Summary:  FreeSWITCH mod_conference
-Requires: %{name} = %{version}-%{release}
-
-%description application-conference
-Provide FreeSWITCH Conference Bridge Services. 
-
 %package application-curl
 Summary:  FreeSWITCH mod_curl
 Requires: %{name} = %{version}-%{release}
@@ -1072,7 +1065,6 @@ Requires: freeswitch-application-abstraction
 Requires: freeswitch-application-blacklist
 Requires: freeswitch-application-callcenter
 Requires: freeswitch-application-cidlookup
-Requires: freeswitch-application-conference
 Requires: freeswitch-application-curl
 Requires: freeswitch-application-db
 Requires: freeswitch-application-directory
@@ -1389,9 +1381,6 @@ fi
 
 %files application-commands
 %{_libdir}/%{name}/mod/mod_commands.so*
-
-%files application-conference
-%{_libdir}/%{name}/mod/mod_conference.so*
 
 %files application-curl
 %{_libdir}/%{name}/mod/mod_curl.so*

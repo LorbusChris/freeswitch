@@ -120,13 +120,6 @@ Requires: %{name} = %{version}-%{release}
 %description application-abstraction
 Provide an abstraction to FreeSWITCH API calls
 
-%package application-avmd
-Summary:  FreeSWITCH voicemail detector
-Requires: %{name} = %{version}-%{release}
-
-%description application-avmd
-Provide an voicemail beep detector for FreeSWITCH
-
 %package application-bert
 Summary:  FreeSWITCH bert module
 Requires: %{name} = %{version}-%{release}
@@ -1076,7 +1069,6 @@ Provides XML-SCGI interface for the FreeSWITCH Open Source telephone platform.
 Summary:  Basic vanilla config set for the FreeSWITCH Open Source telephone platform.
 Requires: %{name} = %{version}-%{release}
 Requires: freeswitch-application-abstraction
-Requires: freeswitch-application-avmd
 Requires: freeswitch-application-blacklist
 Requires: freeswitch-application-callcenter
 Requires: freeswitch-application-cidlookup
@@ -1382,9 +1374,6 @@ fi
 # Application Packages Modules
 %files application-abstraction
 %{_libdir}/%{name}/mod/mod_abstraction.so*
-
-%files application-avmd
-%{_libdir}/%{name}/mod/mod_avmd.so*
 
 %files application-bert
 %{_libdir}/%{name}/mod/mod_bert.so*

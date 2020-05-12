@@ -6,6 +6,8 @@ Release:	1%{?dist}
 URL:		http://www.freeswitch.org/
 Source0:	https://github.com/signalwire/freeswitch/archive/v%{version}.tar.gz
 Source1:	modules.conf.fedora
+Source2:	freeswitch.sysusers
+Source3:	freeswitch.tmpfiles
 
 # TODO(lorbus)
 # Add bundled Provides
@@ -53,6 +55,7 @@ BuildRequires: portaudio-devel
 BuildRequires: python
 BuildRequires: python-devel
 BuildRequires: redhat-rpm-config
+BuildRequires: redhat-rpm-macros
 BuildRequires: redis-devel
 BuildRequires: sofia-sip-devel
 BuildRequires: soundtouch-devel >= 1.7.1
@@ -84,6 +87,8 @@ Requires: libtiff
 Requires: libtheora
 Requires: libxml2
 Requires: libsndfile
+%systemd_requires
+%{?sysusers_requires_compat}
 
 %description
 FreeSWITCH is an open source telephony platform designed to facilitate the creation of voice 
@@ -1145,27 +1150,21 @@ make %{?_smp_mflags}
 %install
 %make_install
 
-mkdir -p %{buildroot}%{_prefix}/log
-mkdir -p %{buildroot}/var/log/%{name}
+mkdir -p %{buildroot}%{_localstatedir}/log/%{name}
 mkdir -p %{buildroot}%{_rundir}/%{name}
 install -Dpm 0644 build/freeswitch.service %{buildroot}%{_unitdir}/freeswitch.service
-install -Dpm 0644 build/freeswitch-tmpfiles.conf %{buildroot}%{_tmpfilesdir}/freeswitch.conf
-install -Dpm 0744 build/freeswitch.sysconfig %{buildroot}/etc/sysconfig/freeswitch
-install -Dpm 0644 build/freeswitch.monitrc %{buildroot}/etc/monit.d/freeswitch.monitrc
-
+install -Dpm 0644 %{SOURCE2} %{buildroot}%{_sysusersdir}/freeswitch.conf
+install -Dpm 0644 %{SOURCE3} %{buildroot}%{_tmpfilesdir}/freeswitch.conf
+install -Dpm 0644 build/freeswitch.sysconfig %{buildroot}%{_sysconfdir}/sysconfig/freeswitch
+install -Dpm 0644 build/freeswitch.monitrc %{buildroot}%{_sysconfdir}/monit.d/freeswitch.monitrc
 find . -type f -name \*.la -delete
 
 
 %pre
-# TODO(lorbus) sysusers format and macro
-if ! /usr/bin/id freeswitch &>/dev/null; then
-	/usr/sbin/useradd -r -g freeswitch -s /bin/false -c "The FreeSWITCH Open Source Telephony Platform" -d %{_localstatedir}/lib/%{name} freeswitch || \
-		%logmsg "Unexpected error adding user \"freeswitch\". Aborting installation."
-fi
+%sysusers_create_compat %{SOURCE2}
 
 
 %post
-%tmpfiles_create freeswitch
 %systemd_post freeswitch.service
 
 
@@ -1174,11 +1173,7 @@ fi
 
 
 %postun
-# TODO(lorbus) sysusers format and macro
-%systemd_postun_with_restart freeswitch.service
-if [ $1 -eq 0 ]; then
-    userdel freeswitch || %logmsg "User \"freeswitch\" could not be deleted."
-fi
+%systemd_postun freeswitch.service
 
 
 %files
@@ -1207,15 +1202,16 @@ fi
 %dir %attr(0750, freeswitch, freeswitch) %{_sysconfdir}/%{name}/sip_profiles
 %dir %attr(0750, freeswitch, freeswitch) %{_sysconfdir}/%{name}/sip_profiles/external
 %dir %attr(0750, freeswitch, freeswitch) %{_sysconfdir}/%{name}/sip_profiles/external-ipv6
-# Other Files
+# Files
+%attr(0755,-,-) %{_bindir}/*
 %{_localstatedir}/lib/%{name}/images/*
-%config(noreplace) %{_datadir}/%{name}/htdocs/*
-%{_unitdir}/freeswitch.service
+%{_libdir}/libfreeswitch*.so*
+%{_sysusersdir}/freeswitch.conf
 %{_tmpfilesdir}/freeswitch.conf
+%{_unitdir}/freeswitch.service
 %config(noreplace) %{_sysconfdir}/sysconfig/freeswitch
 %config(noreplace) %{_sysconfdir}/monit.d/freeswitch.monitrc
-%attr(0755,-,-) %{_bindir}/*
-%{_libdir}/libfreeswitch*.so*
+%config(noreplace) %{_datadir}/%{name}/htdocs/*
 
 
 %files devel

@@ -1301,7 +1301,6 @@ fi
 %config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/autoload_configs/skinny.conf.xml
 %config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/autoload_configs/smpp.conf.xml
 %config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/autoload_configs/sms_flowroute.conf.xml
-%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/autoload_configs/sndfile.conf.xml
 %config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/autoload_configs/sofia.conf.xml
 %config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/autoload_configs/spandsp.conf.xml
 %config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/autoload_configs/switch.conf.xml

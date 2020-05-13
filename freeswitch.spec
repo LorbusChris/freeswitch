@@ -115,7 +115,7 @@ other telephony projects including sipXecs, OpenSER, Asterisk, CodeWeaver and Op
 
 %package devel
 Summary:  Development package for FreeSWITCH open source telephony platform
-Requires: %{name} = %{version}-%{release}
+Requires: %{name}%{?_isa} = %{version}-%{release}
 
 %description devel
 FreeSWITCH development files
@@ -1113,18 +1113,16 @@ Basic vanilla config set for the FreeSWITCH Open Source telephone platform.
 
 
 %build
-# Do not register for ClueCon during build
-touch noreg
+export VERBOSE=yes
+export ACLOCAL_FLAGS="-I /usr/share/aclocal"
+export CFLAGS="%{optflags} -Wno-error=stringop-truncation"
 
 cp %{SOURCE1} ./modules.conf
 
-export VERBOSE=yes
-export ACLOCAL_FLAGS="-I /usr/share/aclocal"
-
-export CFLAGS="%{optflags} -Wno-error=stringop-truncation"
-
 ./bootstrap.sh
 autoreconf --force --install
+# Do not register to ClueCon
+touch noreg
 
 %configure \
 --disable-core-libedit-support \
@@ -1132,11 +1130,14 @@ autoreconf --force --install
 --enable-address-sanitizer \
 --enable-core-odbc-support \
 --enable-core-pgsql-support \
+--enable-portable-binary \
 --enable-system-lua \
 --enable-system-xmlrpc-c \
 --enable-threads \
 --enable-timerfd-wrapper \
+--enable-zrtp \
 --with-erlang \
+--with-gnu-ld \
 --with-odbc \
 --with-openssl \
 --with-certsdir=%{_sysconfdir}/pki/tls \
@@ -1145,7 +1146,6 @@ autoreconf --force --install
 --with-imagesdir=%{_sharedstatedir}/%{name}/images \
 --with-recordingsdir=%{_sharedstatedir}/%{name}/recordings \
 --with-storagedir=%{_sharedstatedir}/%{name}/storage
-
 
 make %{?_smp_mflags}
 

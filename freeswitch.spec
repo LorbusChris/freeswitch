@@ -41,8 +41,8 @@ BuildRequires: libsrtp-devel
 BuildRequires: libtheora-devel
 BuildRequires: libtiff-devel
 BuildRequires: libtool >= 1.5.17
-BuildRequires: libvpx-devel
 BuildRequires: libvorbis-devel
+BuildRequires: libvpx-devel
 BuildRequires: libxml2-devel
 BuildRequires: libyaml-devel
 BuildRequires: lua-devel
@@ -71,25 +71,25 @@ BuildRequires: which
 BuildRequires: yasm
 BuildRequires: zlib-devel
 Requires: alsa-lib
-Requires: libogg
-Requires: libvorbis
 Requires: curl
+Requires: db4
+Requires: gdbm
+Requires: libjpeg
+Requires: libogg
+Requires: libsndfile
+Requires: libtheora
+Requires: libtiff
+Requires: libtiff
+Requires: libvorbis
+Requires: libxml2
 Requires: ncurses
+Requires: openssl >= 1.0.1e
 Requires: pcre
 Requires: speex
 Requires: speexdsp
 Requires: sqlite
-Requires: libtiff
-Requires: openssl >= 1.0.1e
 Requires: unixODBC
-Requires: libjpeg
-Requires: db4
-Requires: gdbm
 Requires: zlib
-Requires: libtiff
-Requires: libtheora
-Requires: libxml2
-Requires: libsndfile
 %{?systemd_requires}
 %{?sysusers_requires_compat}
 
@@ -1141,10 +1141,10 @@ autoreconf --force --install
 --with-openssl \
 --with-certsdir=%{_sysconfdir}/pki/tls \
 --with-rundir=%{_rundir}/%{name} \
---with-dbdir=%{_localstatedir}/lib/%{name}/db \
---with-imagesdir=%{_localstatedir}/lib/%{name}/images \
---with-recordingsdir=%{_localstatedir}/lib/%{name}/recordings \
---with-storagedir=%{_localstatedir}/lib/%{name}/storage
+--with-dbdir=%{_sharedstatedir}/%{name}/db \
+--with-imagesdir=%{_sharedstatedir}/%{name}/images \
+--with-recordingsdir=%{_sharedstatedir}/%{name}/recordings \
+--with-storagedir=%{_sharedstatedir}/%{name}/storage
 
 
 make %{?_smp_mflags}
@@ -1181,9 +1181,9 @@ find . -type f -name \*.la -delete
 
 %files
 # Basic Directory Structure
-%dir %attr(0750, freeswitch, freeswitch) %{_localstatedir}/lib/%{name}
-%dir %attr(0750, freeswitch, freeswitch) %{_localstatedir}/lib/%{name}/db
-%dir %attr(0750, freeswitch, freeswitch) %{_localstatedir}/lib/%{name}/images
+%dir %attr(0750, freeswitch, freeswitch) %{_sharedstatedir}/%{name}
+%dir %attr(0750, freeswitch, freeswitch) %{_sharedstatedir}/%{name}/db
+%dir %attr(0750, freeswitch, freeswitch) %{_sharedstatedir}/%{name}/images
 %dir %attr(0750, freeswitch, freeswitch) %{_localstatedir}/log/%{name}
 %dir %attr(0750, freeswitch, freeswitch) %{_rundir}/%{name}
 %dir %attr(0750, freeswitch, freeswitch) %{_sysconfdir}/%{name}
@@ -1207,7 +1207,7 @@ find . -type f -name \*.la -delete
 %dir %attr(0750, freeswitch, freeswitch) %{_sysconfdir}/%{name}/sip_profiles/external-ipv6
 # Files
 %attr(0755,-,-) %{_bindir}/*
-%{_localstatedir}/lib/%{name}/images/*
+%{_sharedstatedir}/%{name}/images/*
 %{_libdir}/libfreeswitch*.so*
 %{_sysusersdir}/freeswitch.conf
 %{_tmpfilesdir}/freeswitch.conf
@@ -1218,7 +1218,7 @@ find . -type f -name \*.la -delete
 
 
 %files devel
-%{_datadir}/%{name}/pkgconfig/*
+%{_libdir}/pkgconfig/*
 %{_includedir}/*.h
 %{_includedir}/test/*.h
 

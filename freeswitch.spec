@@ -1127,7 +1127,7 @@ export CFLAGS="%{optflags} -Wno-error=stringop-truncation"
 cp %{SOURCE1} ./modules.conf
 
 ./bootstrap.sh
-autoreconf --force --install
+
 # Do not register to ClueCon
 touch noreg
 

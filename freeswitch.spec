@@ -1152,8 +1152,8 @@ make %{?_smp_mflags}
 
 %install
 %make_install
-find %{buildroot}% -type f -name "*.la" -delete
-find %{buildroot}% -type f -name "*.debug" -delete
+find %{buildroot} -type f -name "*.la" -delete
+find %{buildroot} -type f -name "*.debug" -delete
 mkdir -p %{buildroot}%{_localstatedir}/cache/%{name}
 mkdir -p %{buildroot}%{_localstatedir}/log/%{name}
 mkdir -p %{buildroot}%{_rundir}/%{name}

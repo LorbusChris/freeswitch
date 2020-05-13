@@ -1152,7 +1152,9 @@ make %{?_smp_mflags}
 
 %install
 %make_install
-
+find %{buildroot}% -type f -name "*.la" -delete
+find %{buildroot}% -type f -name "*.debug" -delete
+mkdir -p %{buildroot}%{_localstatedir}/cache/%{name}
 mkdir -p %{buildroot}%{_localstatedir}/log/%{name}
 mkdir -p %{buildroot}%{_rundir}/%{name}
 install -Dpm 0644 build/freeswitch.service %{buildroot}%{_unitdir}/freeswitch.service
@@ -1160,7 +1162,6 @@ install -Dpm 0644 %{SOURCE2} %{buildroot}%{_sysusersdir}/freeswitch.conf
 install -Dpm 0644 %{SOURCE3} %{buildroot}%{_tmpfilesdir}/freeswitch.conf
 install -Dpm 0644 build/freeswitch.sysconfig %{buildroot}%{_sysconfdir}/sysconfig/freeswitch
 install -Dpm 0644 build/freeswitch.monitrc %{buildroot}%{_sysconfdir}/monit.d/freeswitch.monitrc
-find . -type f -name \*.la -delete
 
 
 %pre
@@ -1184,6 +1185,7 @@ find . -type f -name \*.la -delete
 %dir %attr(0750, freeswitch, freeswitch) %{_sharedstatedir}/%{name}
 %dir %attr(0750, freeswitch, freeswitch) %{_sharedstatedir}/%{name}/db
 %dir %attr(0750, freeswitch, freeswitch) %{_sharedstatedir}/%{name}/images
+%dir %attr(0750, freeswitch, freeswitch) %{_localstatedir}/cache/%{name}
 %dir %attr(0750, freeswitch, freeswitch) %{_localstatedir}/log/%{name}
 %dir %attr(0750, freeswitch, freeswitch) %{_rundir}/%{name}
 %dir %attr(0750, freeswitch, freeswitch) %{_sysconfdir}/%{name}
@@ -1295,6 +1297,7 @@ find . -type f -name \*.la -delete
 %config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/autoload_configs/skinny.conf.xml
 %config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/autoload_configs/smpp.conf.xml
 %config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/autoload_configs/sms_flowroute.conf.xml
+%config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/autoload_configs/sndfile.conf.xml
 %config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/autoload_configs/sofia.conf.xml
 %config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/autoload_configs/spandsp.conf.xml
 %config(noreplace) %attr(0640, freeswitch, freeswitch) %{_sysconfdir}/%{name}/autoload_configs/switch.conf.xml

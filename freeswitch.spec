@@ -509,6 +509,13 @@ Conflicts: codec-amrwb
 %description codec-passthru-amrwb
 Pass-through AMR WideBand Codec support for FreeSWITCH open source telephony platform
 
+%package codec-b64
+Summary:  B64 codec support for FreeSWITCH open source telephony platform
+Requires: %{name} = %{version}-%{release}
+
+%description codec-b64
+Base64 audio codec support for FreeSWITCH open source telephony platform
+
 %package codec-codec2
 Summary:  Codec2 Narrow Band Codec support for FreeSWITCH open source telephony platform
 Requires: %{name} = %{version}-%{release}
@@ -1153,7 +1160,6 @@ make %{?_smp_mflags}
 %install
 %make_install
 find %{buildroot} -type f -name "*.la" -delete
-find %{buildroot} -type f -name "*.debug" -delete
 mkdir -p %{buildroot}%{_localstatedir}/cache/%{name}
 mkdir -p %{buildroot}%{_localstatedir}/log/%{name}
 mkdir -p %{buildroot}%{_rundir}/%{name}
@@ -1492,6 +1498,9 @@ install -Dpm 0644 build/freeswitch.monitrc %{buildroot}%{_sysconfdir}/monit.d/fr
 %files codec-passthru-amrwb
 %{_libdir}/%{name}/mod/mod_amrwb.so*
 
+%files codec-b64
+%{_libdir}/%{name}/mod/mod_b64.so*
+
 %files codec-codec2
 %{_libdir}/%{name}/mod/mod_codec2.so*
 
@@ -1542,6 +1551,9 @@ install -Dpm 0644 build/freeswitch.monitrc %{buildroot}%{_sysconfdir}/monit.d/fr
 %{_libdir}/%{name}/mod/mod_dingaling.so*
 
 %files endpoint-loopback
+%{_libdir}/%{name}/mod/mod_loopback.so*
+
+%files endpoint-portaudio
 %{_libdir}/%{name}/mod/mod_portaudio.so*
 
 %files endpoint-rtc
